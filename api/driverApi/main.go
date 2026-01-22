@@ -1,6 +1,9 @@
 package main
 
 import (
+	"group/kitex_gen/car/driver"
+	"group/kitex_gen/car/driver/driverservice"
+
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
 	"github.com/cloudwego/kitex/client"
