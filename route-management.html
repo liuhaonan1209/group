@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>班线管理</title>
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;margin:0;background:#f5f6fa;color:#1f2d3d}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:200px;background:#2f3b52;color:#fff}
+.sidebar h1{font-size:16px;margin:0;padding:16px;border-bottom:1px solid #3e4a63}
+.sidebar .item{padding:12px 16px;border-bottom:1px solid #3e4a63}
+.content{flex:1;padding:20px}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:8px;margin-bottom:16px}
+.card .header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #e5e7eb}
+.card .body{padding:16px}
+.form-row{display:flex;gap:12px;flex-wrap:wrap}
+.form-row .field{flex:1;min-width:180px}
+.field label{display:block;font-size:12px;color:#6b7280;margin-bottom:6px}
+.field input,.field select{width:100%;padding:8px 10px;border:1px solid #d1d5db;border-radius:6px}
+.btn{padding:8px 12px;border:none;border-radius:6px;background:#2563eb;color:#fff;cursor:pointer}
+.btn.secondary{background:#6b7280}
+.btn.danger{background:#ef4444}
+.btn.outline{background:#fff;color:#2563eb;border:1px solid #2563eb}
+.btn.small{padding:6px 10px;font-size:12px}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{border-bottom:1px solid #e5e7eb;padding:10px;text-align:left}
+.table th{background:#f9fafb;font-weight:600}
+.toolbar{display:flex;gap:8px;align-items:center}
+.pagination{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:12px}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px}
+.pill.green{background:#ecfdf5;color:#059669}
+.pill.gray{background:#f3f4f6;color:#4b5563}
+.drawer{position:fixed;right:0;top:0;width:560px;max-width:92vw;height:100vh;background:#fff;border-left:1px solid #e5e7eb;box-shadow:-8px 0 24px rgba(0,0,0,.08);transform:translateX(100%);transition:.25s}
+.drawer.open{transform:translateX(0)}
+.drawer .head{padding:16px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center}
+.drawer .body{padding:16px}
+.steps{display:flex;gap:16px;margin-bottom:16px}
+.step{flex:1;padding:10px;border:1px solid #e5e7eb;border-radius:6px;text-align:center}
+.step.active{border-color:#2563eb;color:#2563eb}
+.panel{display:flex;gap:12px}
+.panel .col{flex:1}
+.list{border:1px solid #e5e7eb;border-radius:6px;min-height:160px;padding:8px}
+.list-item{display:flex;justify-content:space-between;padding:8px;border-bottom:1px dashed #e5e7eb}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:center;justify-content:center}
+.modal.open{display:flex}
+.dialog{background:#fff;border-radius:8px;width:840px;max-width:94vw;max-height:86vh;display:flex;flex-direction:column}
+.dialog .head{display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #e5e7eb}
+.dialog .body{display:flex;gap:12px;padding:12px 16px;overflow:auto}
+.dialog .foot{display:flex;justify-content:flex-end;gap:8px;padding:12px 16px;border-top:1px solid #e5e7eb}
+.left{flex:1}
+.right{width:280px}
+.hint{font-size:12px;color:#6b7280}
+.empty{display:flex;align-items:center;justify-content:center;color:#9ca3af;height:120px;border:1px dashed #e5e7eb;border-radius:6px}
+</style>
+</head>
+<body>
+<div class="layout">
+  <div class="sidebar">
+    <h1>班线管理平台</h1>
+    <div class="item">班线管理</div>
+    <div class="item">站点管理</div>
+    <div class="item">班次管理</div>
+  </div>
+  <div class="content">
+    <div class="card">
+      <div class="header">
+        <div class="toolbar">
+          <button class="btn" id="btnCreate">创建班线</button>
+        </div>
+        <div class="toolbar">
+          <div class="field"><input id="qRouteNo" placeholder="班线编号"></div>
+          <div class="field"><input id="qFieet" placeholder="所属车队"></div>
+          <div class="field"><input id="qTage" placeholder="标签"></div>
+          <button class="btn outline" id="btnSearch">查询</button>
+          <button class="btn secondary" id="btnReset">重置</button>
+        </div>
+      </div>
+      <div class="body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>编号</th>
+              <th>班线编号</th>
+              <th>车队</th>
+              <th>标签</th>
+              <th>状态</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="routeTbody"></tbody>
+        </table>
+        <div class="pagination">
+          <button class="btn small" id="prevPage">上一页</button>
+          <span id="pageInfo"></span>
+          <button class="btn small" id="nextPage">下一页</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="header"><div>班线详情</div></div>
+      <div class="body" id="detailBox">
+        <div class="empty">选择一条班线查看详情</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="drawer" id="drawer">
+  <div class="head">
+    <div>创建/编辑班线</div>
+    <button class="btn secondary" id="closeDrawer">关闭</button>
+  </div>
+  <div class="body">
+    <div class="steps">
+      <div class="step" id="step1Tag">第一步 基础信息</div>
+      <div class="step" id="step2Tag">第二步 选择站点</div>
+    </div>
+    <div id="step1">
+      <div class="form-row">
+        <div class="field"><label>班线编号</label><input id="fRouteNo"></div>
+        <div class="field"><label>所属车队</label><input id="fFieet"></div>
+        <div class="field"><label>标签</label><input id="fTage"></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>起点站ID</label><input id="fStartStationId" type="number"></div>
+        <div class="field"><label>终点站ID</label><input id="fEndStationId" type="number"></div>
+      </div>
+      <div class="toolbar" style="margin-top:12px">
+        <button class="btn" id="toStep2">下一步</button>
+      </div>
+    </div>
+    <div id="step2" style="display:none">
+      <div class="panel">
+        <div class="col">
+          <div class="toolbar" style="margin-bottom:8px">
+            <div style="flex:1;font-weight:600">添加上车点</div>
+            <button class="btn small" id="btnAddUp">选择上车点</button>
+          </div>
+          <div class="list" id="upList"></div>
+        </div>
+        <div class="col">
+          <div class="toolbar" style="margin-bottom:8px">
+            <div style="flex:1;font-weight:600">添加下车点</div>
+            <button class="btn small" id="btnAddDown">选择下车点</button>
+          </div>
+          <div class="list" id="downList"></div>
+        </div>
+      </div>
+      <div class="hint" style="margin-top:8px">各自列表内部排重，按时间由小到大排序，首个站点时间为0</div>
+      <div class="toolbar" style="margin-top:12px;justify-content:flex-end">
+        <button class="btn secondary" id="backStep1">上一步</button>
+        <button class="btn" id="submitCreate">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="stationModal">
+  <div class="dialog">
+    <div class="head">
+      <div id="modalTitle">选择站点</div>
+      <button class="btn secondary" id="closeModal">关闭</button>
+    </div>
+    <div class="body">
+      <div class="left">
+        <div class="form-row" style="margin-bottom:8px">
+          <div class="field"><input id="sKeyword" placeholder="搜索站点"></div>
+          <button class="btn outline" id="sSearch">搜索</button>
+        </div>
+        <table class="table">
+          <thead><tr><th>站点ID</th><th>站点名称</th><th>操作</th></tr></thead>
+          <tbody id="stationTbody"></tbody>
+        </table>
+      </div>
+      <div class="right">
+        <div class="field"><label>始发站到该站用时(分钟)</label><input id="sMinutes" type="number" min="0" max="600" step="5"></div>
+        <div class="hint" style="margin-top:8px">不填时默认0</div>
+      </div>
+    </div>
+    <div class="foot">
+      <button class="btn" id="sConfirm">确定</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const state={
+  list:[],page:1,size:10,total:0,filters:{routeNo:"",fieet:"",tage:""},
+  editingId:null,step:1,mode:"create",
+  upStations:[],downStations:[],
+  modal:{open:false,mode:"up",selected:null,minutes:0,keyword:"",data:[]}
+}
+function setStep(n){state.step=n;document.getElementById("step1").style.display=n===1?"":"none";document.getElementById("step2").style.display=n===2?"":"none";document.getElementById("step1Tag").classList.toggle("active",n===1);document.getElementById("step2Tag").classList.toggle("active",n===2)}
+function openDrawer(mode,id){state.mode=mode;state.editingId=id||null;document.getElementById("drawer").classList.add("open");setStep(1)}
+function closeDrawer(){document.getElementById("drawer").classList.remove("open")}
+function openModal(mode){state.modal.open=true;state.modal.mode=mode;state.modal.selected=null;state.modal.minutes=0;document.getElementById("sMinutes").value="";document.getElementById("stationModal").classList.add("open");document.getElementById("modalTitle").innerText=mode==="up"?"选择上车点":"选择下车点";loadStations()}
+function closeModal(){state.modal.open=false;document.getElementById("stationModal").classList.remove("open")}
+function renderRoutes(){
+  const tbody=document.getElementById("routeTbody");tbody.innerHTML="";
+  state.list.forEach(it=>{
+    const tr=document.createElement("tr");
+    const status=it.isActive?'<span class="pill green">启用</span>':'<span class="pill gray">停用</span>';
+    tr.innerHTML=`<td>${it.id}</td><td>${it.routeNo||""}</td><td>${it.fieet||""}</td><td>${it.tage||""}</td><td>${status}</td>
+    <td>
+      <button class="btn small" data-action="detail" data-id="${it.id}">详情</button>
+      <button class="btn small" data-action="edit" data-id="${it.id}">编辑</button>
+      <button class="btn small danger" data-action="del" data-id="${it.id}">删除</button>
+    </td>`;
+    tbody.appendChild(tr);
+  });
+  document.getElementById("pageInfo").innerText=`第 ${state.page} 页 / 共 ${Math.max(1,Math.ceil(state.total/state.size))} 页`;
+}
+function renderDetail(data){
+  const box=document.getElementById("detailBox");
+  const up=(data.upStations||[]).map(s=>`<div class="list-item"><div>站点ID ${s.stationId}</div><div>时间 ${s.travelTime} 分钟</div></div>`).join("");
+  const down=(data.downStations||[]).map(s=>`<div class="list-item"><div>站点ID ${s.stationId}</div><div>时间 ${s.travelTime} 分钟</div></div>`).join("");
+  box.innerHTML=`<div class="form-row"><div class="field"><label>班线编号</label><input value="${data.routeNo||""}" disabled></div>
+  <div class="field"><label>所属车队</label><input value="${data.fieet||""}" disabled></div>
+  <div class="field"><label>标签</label><input value="${data.tage||""}" disabled></div></div>
+  <div class="form-row"><div class="field"><label>起点站ID</label><input value="${data.startStationId||""}" disabled></div>
+  <div class="field"><label>终点站ID</label><input value="${data.endStationId||""}" disabled></div></div>
+  <div class="panel" style="margin-top:12px">
+    <div class="col"><div class="toolbar" style="margin-bottom:8px"><div style="font-weight:600">已选上车点</div></div><div class="list">${up||'<div class="empty">暂无上车点</div>'}</div></div>
+    <div class="col"><div class="toolbar" style="margin-bottom:8px"><div style="font-weight:600">已选下车点</div></div><div class="list">${down||'<div class="empty">暂无下车点</div>'}</div></div>
+  </div>`;
+}
+function renderSelected(){
+  const normalize=list=>{if(list.length===0)return list.slice();const sorted=list.slice().sort((a,b)=>a.travelTime-b.travelTime);sorted[0].travelTime=0;return sorted}
+  state.upStations=normalize(state.upStations)
+  state.downStations=normalize(state.downStations)
+  const upBox=document.getElementById("upList");upBox.innerHTML="";
+  state.upStations.forEach((s,idx)=>{const div=document.createElement("div");div.className="list-item";div.innerHTML=`<div>站点ID ${s.stationId}</div><div>时间 ${s.travelTime} 分钟</div><div><button class="btn small danger" data-rm="up" data-id="${s.stationId}">移除</button></div>`;upBox.appendChild(div)})
+  const downBox=document.getElementById("downList");downBox.innerHTML="";
+  state.downStations.forEach((s,idx)=>{const div=document.createElement("div");div.className="list-item";div.innerHTML=`<div>站点ID ${s.stationId}</div><div>时间 ${s.travelTime} 分钟</div><div><button class="btn small danger" data-rm="down" data-id="${s.stationId}">移除</button></div>`;downBox.appendChild(div)})
+}
+async function fetchList(){
+  const p=new URLSearchParams({routeNo:state.filters.routeNo||"",fieet:state.filters.fieet||"",tage:state.filters.tage||"",page:String(state.page),size:String(state.size)})
+  const r=await fetch(`/api/route/list?${p.toString()}`);const j=await r.json();if(!j.success){alert(j.msg||"查询失败");return}
+  state.list=(j.list||[]).map(x=>({id:x.id,routeNo:x.routeNo,fieet:x.fieet,tage:x.tage,isActive:x.isActive}))
+  state.total=j.total||0;renderRoutes()
+}
+async function fetchDetail(id){
+  const r=await fetch(`/api/route/info?id=${id}`);const j=await r.json();if(!j.success){alert(j.msg||"查询失败");return}renderDetail(j)
+}
+function dedupPush(target,stationId,minutes){
+  const exists=target.some(s=>s.stationId===stationId);if(exists){alert("该站点已添加");return false}
+  target.push({stationId:stationId,travelTime:Number(minutes||0)});return true
+}
+function removeSelected(type,id){
+  if(type==="up"){state.upStations=state.upStations.filter(s=>s.stationId!==Number(id))}
+  else{state.downStations=state.downStations.filter(s=>s.stationId!==Number(id))}
+  renderSelected()
+}
+async function createOrUpdate(){
+  const payload={
+    routeNo:document.getElementById("fRouteNo").value.trim(),
+    fieet:document.getElementById("fFieet").value.trim(),
+    tage:document.getElementById("fTage").value.trim(),
+    startStationId:Number(document.getElementById("fStartStationId").value||0),
+    endStationId:Number(document.getElementById("fEndStationId").value||0),
+    upStations:state.upStations.map(s=>({stationId:s.stationId,travelTime:s.travelTime})),
+    downStations:state.downStations.map(s=>({stationId:s.stationId,travelTime:s.travelTime}))
+  }
+  if(!payload.routeNo){alert("班线编号不能为空");return}
+  if(state.mode==="edit"){payload.id=state.editingId}
+  const url=state.mode==="edit"?"/api/route/update":"/api/route/create"
+  const method=state.mode==="edit"?"PUT":"POST"
+  const r=await fetch(url,{method,headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});const j=await r.json();if(!j.success){alert(j.msg||"提交失败");return}
+  closeDrawer();await fetchList();if(state.mode==="create"&&j.routeId){await fetchDetail(j.routeId)}
+}
+async function deleteRoute(id){
+  if(!confirm("确认删除该班线？"))return
+  const r=await fetch(`/api/route/delete?id=${id}`,{method:"DELETE"});const j=await r.json();if(!j.success){alert(j.msg||"删除失败");return}
+  await fetchList();document.getElementById("detailBox").innerHTML='<div class="empty">选择一条班线查看详情</div>'
+}
+async function loadStations(){
+  try{
+    const p=new URLSearchParams({keyword:state.modal.keyword||"",page:"1",size:"8"})
+    const r=await fetch(`/api/station/list?${p.toString()}`)
+    const j=await r.json()
+    state.modal.data=(j.list||[]).map(x=>({id:x.id,name:x.name}))
+  }catch(e){
+    state.modal.data=[{id:101,name:"站点A"},{id:102,name:"站点B"},{id:103,name:"站点C"},{id:104,name:"站点D"},{id:105,name:"站点E"}]
+  }
+  const tbody=document.getElementById("stationTbody");tbody.innerHTML=""
+  state.modal.data.forEach(s=>{
+    const tr=document.createElement("tr");tr.innerHTML=`<td>${s.id}</td><td>${s.name}</td><td><button class="btn small" data-pick="${s.id}">选择</button></td>`;tbody.appendChild(tr)
+  })
+}
+function attachEvents(){
+  document.getElementById("btnSearch").addEventListener("click",()=>{state.filters.routeNo=document.getElementById("qRouteNo").value.trim();state.filters.fieet=document.getElementById("qFieet").value.trim();state.filters.tage=document.getElementById("qTage").value.trim();state.page=1;fetchList()})
+  document.getElementById("btnReset").addEventListener("click",()=>{document.getElementById("qRouteNo").value="";document.getElementById("qFieet").value="";document.getElementById("qTage").value="";state.filters={routeNo:"",fieet:"",tage:""};state.page=1;fetchList()})
+  document.getElementById("prevPage").addEventListener("click",()=>{if(state.page>1){state.page--;fetchList()}})
+  document.getElementById("nextPage").addEventListener("click",()=>{const max=Math.max(1,Math.ceil(state.total/state.size));if(state.page<max){state.page++;fetchList()}})
+  document.getElementById("btnCreate").addEventListener("click",()=>{state.upStations=[];state.downStations=[];renderSelected();openDrawer("create")})
+  document.getElementById("closeDrawer").addEventListener("click",closeDrawer)
+  document.getElementById("toStep2").addEventListener("click",()=>setStep(2))
+  document.getElementById("backStep1").addEventListener("click",()=>setStep(1))
+  document.getElementById("btnAddUp").addEventListener("click",()=>openModal("up"))
+  document.getElementById("btnAddDown").addEventListener("click",()=>openModal("down"))
+  document.getElementById("closeModal").addEventListener("click",closeModal)
+  document.getElementById("sSearch").addEventListener("click",()=>{state.modal.keyword=document.getElementById("sKeyword").value.trim();loadStations()})
+  document.getElementById("stationTbody").addEventListener("click",(e)=>{const id=e.target.getAttribute("data-pick");if(!id)return;state.modal.selected=Number(id)})
+  document.getElementById("sConfirm").addEventListener("click",()=>{const id=state.modal.selected;if(!id){alert("请选择站点");return}const minutes=document.getElementById("sMinutes").value;const ok=state.modal.mode==="up"?dedupPush(state.upStations,id,minutes):dedupPush(state.downStations,id,minutes);if(ok){renderSelected();closeModal()}})
+  document.getElementById("upList").addEventListener("click",(e)=>{const id=e.target.getAttribute("data-id");const rm=e.target.getAttribute("data-rm");if(!id||!rm)return;removeSelected(rm,id)})
+  document.getElementById("downList").addEventListener("click",(e)=>{const id=e.target.getAttribute("data-id");const rm=e.target.getAttribute("data-rm");if(!id||!rm)return;removeSelected(rm,id)})
+  document.getElementById("submitCreate").addEventListener("click",createOrUpdate)
+  document.getElementById("routeTbody").addEventListener("click",(e)=>{const id=e.target.getAttribute("data-id");const act=e.target.getAttribute("data-action");if(!id||!act)return;if(act==="detail"){fetchDetail(id)}else if(act==="edit"){state.upStations=[];state.downStations=[];openDrawer("edit",Number(id));fetchDetail(id)}else if(act==="del"){deleteRoute(id)}})
+}
+attachEvents();renderSelected();fetchList()
+</script>
+</body>
+</html>
