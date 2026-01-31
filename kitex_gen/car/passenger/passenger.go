@@ -92,8 +92,287 @@ var fieldIDToName_PassengerDetailResp = map[int16]string{
 	4: "registerDate",
 }
 
+type PassengerRegisterReq struct {
+	Name   string  `thrift:"name,1" frugal:"1,default,string" json:"name"`
+	Tel    string  `thrift:"tel,2" frugal:"2,default,string" json:"tel"`
+	IDCard string  `thrift:"IDCard,3" frugal:"3,default,string" json:"IDCard"`
+	Photo  *string `thrift:"photo,4,optional" frugal:"4,optional,string" json:"photo,omitempty"`
+}
+
+func NewPassengerRegisterReq() *PassengerRegisterReq {
+	return &PassengerRegisterReq{}
+}
+
+func (p *PassengerRegisterReq) InitDefault() {
+}
+
+func (p *PassengerRegisterReq) GetName() (v string) {
+	return p.Name
+}
+
+func (p *PassengerRegisterReq) GetTel() (v string) {
+	return p.Tel
+}
+
+func (p *PassengerRegisterReq) GetIDCard() (v string) {
+	return p.IDCard
+}
+
+var PassengerRegisterReq_Photo_DEFAULT string
+
+func (p *PassengerRegisterReq) GetPhoto() (v string) {
+	if !p.IsSetPhoto() {
+		return PassengerRegisterReq_Photo_DEFAULT
+	}
+	return *p.Photo
+}
+func (p *PassengerRegisterReq) SetName(val string) {
+	p.Name = val
+}
+func (p *PassengerRegisterReq) SetTel(val string) {
+	p.Tel = val
+}
+func (p *PassengerRegisterReq) SetIDCard(val string) {
+	p.IDCard = val
+}
+func (p *PassengerRegisterReq) SetPhoto(val *string) {
+	p.Photo = val
+}
+
+func (p *PassengerRegisterReq) IsSetPhoto() bool {
+	return p.Photo != nil
+}
+
+func (p *PassengerRegisterReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("PassengerRegisterReq(%+v)", *p)
+}
+
+var fieldIDToName_PassengerRegisterReq = map[int16]string{
+	1: "name",
+	2: "tel",
+	3: "IDCard",
+	4: "photo",
+}
+
+type PassengerRegisterResp struct {
+	Id      int64  `thrift:"id,1" frugal:"1,default,i64" json:"id"`
+	Message string `thrift:"message,2" frugal:"2,default,string" json:"message"`
+	Success bool   `thrift:"success,3" frugal:"3,default,bool" json:"success"`
+}
+
+func NewPassengerRegisterResp() *PassengerRegisterResp {
+	return &PassengerRegisterResp{}
+}
+
+func (p *PassengerRegisterResp) InitDefault() {
+}
+
+func (p *PassengerRegisterResp) GetId() (v int64) {
+	return p.Id
+}
+
+func (p *PassengerRegisterResp) GetMessage() (v string) {
+	return p.Message
+}
+
+func (p *PassengerRegisterResp) GetSuccess() (v bool) {
+	return p.Success
+}
+func (p *PassengerRegisterResp) SetId(val int64) {
+	p.Id = val
+}
+func (p *PassengerRegisterResp) SetMessage(val string) {
+	p.Message = val
+}
+func (p *PassengerRegisterResp) SetSuccess(val bool) {
+	p.Success = val
+}
+
+func (p *PassengerRegisterResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("PassengerRegisterResp(%+v)", *p)
+}
+
+var fieldIDToName_PassengerRegisterResp = map[int16]string{
+	1: "id",
+	2: "message",
+	3: "success",
+}
+
+type PassengerVerifyReq struct {
+	Tel        string `thrift:"tel,1" frugal:"1,default,string" json:"tel"`
+	VerifyCode string `thrift:"verifyCode,2" frugal:"2,default,string" json:"verifyCode"`
+}
+
+func NewPassengerVerifyReq() *PassengerVerifyReq {
+	return &PassengerVerifyReq{}
+}
+
+func (p *PassengerVerifyReq) InitDefault() {
+}
+
+func (p *PassengerVerifyReq) GetTel() (v string) {
+	return p.Tel
+}
+
+func (p *PassengerVerifyReq) GetVerifyCode() (v string) {
+	return p.VerifyCode
+}
+func (p *PassengerVerifyReq) SetTel(val string) {
+	p.Tel = val
+}
+func (p *PassengerVerifyReq) SetVerifyCode(val string) {
+	p.VerifyCode = val
+}
+
+func (p *PassengerVerifyReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("PassengerVerifyReq(%+v)", *p)
+}
+
+var fieldIDToName_PassengerVerifyReq = map[int16]string{
+	1: "tel",
+	2: "verifyCode",
+}
+
+type PassengerVerifyResp struct {
+	Verified    bool   `thrift:"verified,1" frugal:"1,default,bool" json:"verified"`
+	Message     string `thrift:"message,2" frugal:"2,default,string" json:"message"`
+	PassengerId *int64 `thrift:"passengerId,3,optional" frugal:"3,optional,i64" json:"passengerId,omitempty"`
+}
+
+func NewPassengerVerifyResp() *PassengerVerifyResp {
+	return &PassengerVerifyResp{}
+}
+
+func (p *PassengerVerifyResp) InitDefault() {
+}
+
+func (p *PassengerVerifyResp) GetVerified() (v bool) {
+	return p.Verified
+}
+
+func (p *PassengerVerifyResp) GetMessage() (v string) {
+	return p.Message
+}
+
+var PassengerVerifyResp_PassengerId_DEFAULT int64
+
+func (p *PassengerVerifyResp) GetPassengerId() (v int64) {
+	if !p.IsSetPassengerId() {
+		return PassengerVerifyResp_PassengerId_DEFAULT
+	}
+	return *p.PassengerId
+}
+func (p *PassengerVerifyResp) SetVerified(val bool) {
+	p.Verified = val
+}
+func (p *PassengerVerifyResp) SetMessage(val string) {
+	p.Message = val
+}
+func (p *PassengerVerifyResp) SetPassengerId(val *int64) {
+	p.PassengerId = val
+}
+
+func (p *PassengerVerifyResp) IsSetPassengerId() bool {
+	return p.PassengerId != nil
+}
+
+func (p *PassengerVerifyResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("PassengerVerifyResp(%+v)", *p)
+}
+
+var fieldIDToName_PassengerVerifyResp = map[int16]string{
+	1: "verified",
+	2: "message",
+	3: "passengerId",
+}
+
+type SendVerifyCodeReq struct {
+	Tel string `thrift:"tel,1" frugal:"1,default,string" json:"tel"`
+}
+
+func NewSendVerifyCodeReq() *SendVerifyCodeReq {
+	return &SendVerifyCodeReq{}
+}
+
+func (p *SendVerifyCodeReq) InitDefault() {
+}
+
+func (p *SendVerifyCodeReq) GetTel() (v string) {
+	return p.Tel
+}
+func (p *SendVerifyCodeReq) SetTel(val string) {
+	p.Tel = val
+}
+
+func (p *SendVerifyCodeReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SendVerifyCodeReq(%+v)", *p)
+}
+
+var fieldIDToName_SendVerifyCodeReq = map[int16]string{
+	1: "tel",
+}
+
+type SendVerifyCodeResp struct {
+	Success bool   `thrift:"success,1" frugal:"1,default,bool" json:"success"`
+	Message string `thrift:"message,2" frugal:"2,default,string" json:"message"`
+}
+
+func NewSendVerifyCodeResp() *SendVerifyCodeResp {
+	return &SendVerifyCodeResp{}
+}
+
+func (p *SendVerifyCodeResp) InitDefault() {
+}
+
+func (p *SendVerifyCodeResp) GetSuccess() (v bool) {
+	return p.Success
+}
+
+func (p *SendVerifyCodeResp) GetMessage() (v string) {
+	return p.Message
+}
+func (p *SendVerifyCodeResp) SetSuccess(val bool) {
+	p.Success = val
+}
+func (p *SendVerifyCodeResp) SetMessage(val string) {
+	p.Message = val
+}
+
+func (p *SendVerifyCodeResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SendVerifyCodeResp(%+v)", *p)
+}
+
+var fieldIDToName_SendVerifyCodeResp = map[int16]string{
+	1: "success",
+	2: "message",
+}
+
 type PassengerService interface {
 	PassengerDetail(ctx context.Context, req *PassengerDetailReq) (r *PassengerDetailResp, err error)
+
+	PassengerRegister(ctx context.Context, req *PassengerRegisterReq) (r *PassengerRegisterResp, err error)
+
+	PassengerVerify(ctx context.Context, req *PassengerVerifyReq) (r *PassengerVerifyResp, err error)
+
+	SendVerifyCode(ctx context.Context, req *SendVerifyCodeReq) (r *SendVerifyCodeResp, err error)
 }
 
 type PassengerServicePassengerDetailArgs struct {
@@ -169,5 +448,233 @@ func (p *PassengerServicePassengerDetailResult) String() string {
 }
 
 var fieldIDToName_PassengerServicePassengerDetailResult = map[int16]string{
+	0: "success",
+}
+
+type PassengerServicePassengerRegisterArgs struct {
+	Req *PassengerRegisterReq `thrift:"req,1" frugal:"1,default,PassengerRegisterReq" json:"req"`
+}
+
+func NewPassengerServicePassengerRegisterArgs() *PassengerServicePassengerRegisterArgs {
+	return &PassengerServicePassengerRegisterArgs{}
+}
+
+func (p *PassengerServicePassengerRegisterArgs) InitDefault() {
+}
+
+var PassengerServicePassengerRegisterArgs_Req_DEFAULT *PassengerRegisterReq
+
+func (p *PassengerServicePassengerRegisterArgs) GetReq() (v *PassengerRegisterReq) {
+	if !p.IsSetReq() {
+		return PassengerServicePassengerRegisterArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *PassengerServicePassengerRegisterArgs) SetReq(val *PassengerRegisterReq) {
+	p.Req = val
+}
+
+func (p *PassengerServicePassengerRegisterArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *PassengerServicePassengerRegisterArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("PassengerServicePassengerRegisterArgs(%+v)", *p)
+}
+
+var fieldIDToName_PassengerServicePassengerRegisterArgs = map[int16]string{
+	1: "req",
+}
+
+type PassengerServicePassengerRegisterResult struct {
+	Success *PassengerRegisterResp `thrift:"success,0,optional" frugal:"0,optional,PassengerRegisterResp" json:"success,omitempty"`
+}
+
+func NewPassengerServicePassengerRegisterResult() *PassengerServicePassengerRegisterResult {
+	return &PassengerServicePassengerRegisterResult{}
+}
+
+func (p *PassengerServicePassengerRegisterResult) InitDefault() {
+}
+
+var PassengerServicePassengerRegisterResult_Success_DEFAULT *PassengerRegisterResp
+
+func (p *PassengerServicePassengerRegisterResult) GetSuccess() (v *PassengerRegisterResp) {
+	if !p.IsSetSuccess() {
+		return PassengerServicePassengerRegisterResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *PassengerServicePassengerRegisterResult) SetSuccess(x interface{}) {
+	p.Success = x.(*PassengerRegisterResp)
+}
+
+func (p *PassengerServicePassengerRegisterResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *PassengerServicePassengerRegisterResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("PassengerServicePassengerRegisterResult(%+v)", *p)
+}
+
+var fieldIDToName_PassengerServicePassengerRegisterResult = map[int16]string{
+	0: "success",
+}
+
+type PassengerServicePassengerVerifyArgs struct {
+	Req *PassengerVerifyReq `thrift:"req,1" frugal:"1,default,PassengerVerifyReq" json:"req"`
+}
+
+func NewPassengerServicePassengerVerifyArgs() *PassengerServicePassengerVerifyArgs {
+	return &PassengerServicePassengerVerifyArgs{}
+}
+
+func (p *PassengerServicePassengerVerifyArgs) InitDefault() {
+}
+
+var PassengerServicePassengerVerifyArgs_Req_DEFAULT *PassengerVerifyReq
+
+func (p *PassengerServicePassengerVerifyArgs) GetReq() (v *PassengerVerifyReq) {
+	if !p.IsSetReq() {
+		return PassengerServicePassengerVerifyArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *PassengerServicePassengerVerifyArgs) SetReq(val *PassengerVerifyReq) {
+	p.Req = val
+}
+
+func (p *PassengerServicePassengerVerifyArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *PassengerServicePassengerVerifyArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("PassengerServicePassengerVerifyArgs(%+v)", *p)
+}
+
+var fieldIDToName_PassengerServicePassengerVerifyArgs = map[int16]string{
+	1: "req",
+}
+
+type PassengerServicePassengerVerifyResult struct {
+	Success *PassengerVerifyResp `thrift:"success,0,optional" frugal:"0,optional,PassengerVerifyResp" json:"success,omitempty"`
+}
+
+func NewPassengerServicePassengerVerifyResult() *PassengerServicePassengerVerifyResult {
+	return &PassengerServicePassengerVerifyResult{}
+}
+
+func (p *PassengerServicePassengerVerifyResult) InitDefault() {
+}
+
+var PassengerServicePassengerVerifyResult_Success_DEFAULT *PassengerVerifyResp
+
+func (p *PassengerServicePassengerVerifyResult) GetSuccess() (v *PassengerVerifyResp) {
+	if !p.IsSetSuccess() {
+		return PassengerServicePassengerVerifyResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *PassengerServicePassengerVerifyResult) SetSuccess(x interface{}) {
+	p.Success = x.(*PassengerVerifyResp)
+}
+
+func (p *PassengerServicePassengerVerifyResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *PassengerServicePassengerVerifyResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("PassengerServicePassengerVerifyResult(%+v)", *p)
+}
+
+var fieldIDToName_PassengerServicePassengerVerifyResult = map[int16]string{
+	0: "success",
+}
+
+type PassengerServiceSendVerifyCodeArgs struct {
+	Req *SendVerifyCodeReq `thrift:"req,1" frugal:"1,default,SendVerifyCodeReq" json:"req"`
+}
+
+func NewPassengerServiceSendVerifyCodeArgs() *PassengerServiceSendVerifyCodeArgs {
+	return &PassengerServiceSendVerifyCodeArgs{}
+}
+
+func (p *PassengerServiceSendVerifyCodeArgs) InitDefault() {
+}
+
+var PassengerServiceSendVerifyCodeArgs_Req_DEFAULT *SendVerifyCodeReq
+
+func (p *PassengerServiceSendVerifyCodeArgs) GetReq() (v *SendVerifyCodeReq) {
+	if !p.IsSetReq() {
+		return PassengerServiceSendVerifyCodeArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *PassengerServiceSendVerifyCodeArgs) SetReq(val *SendVerifyCodeReq) {
+	p.Req = val
+}
+
+func (p *PassengerServiceSendVerifyCodeArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *PassengerServiceSendVerifyCodeArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("PassengerServiceSendVerifyCodeArgs(%+v)", *p)
+}
+
+var fieldIDToName_PassengerServiceSendVerifyCodeArgs = map[int16]string{
+	1: "req",
+}
+
+type PassengerServiceSendVerifyCodeResult struct {
+	Success *SendVerifyCodeResp `thrift:"success,0,optional" frugal:"0,optional,SendVerifyCodeResp" json:"success,omitempty"`
+}
+
+func NewPassengerServiceSendVerifyCodeResult() *PassengerServiceSendVerifyCodeResult {
+	return &PassengerServiceSendVerifyCodeResult{}
+}
+
+func (p *PassengerServiceSendVerifyCodeResult) InitDefault() {
+}
+
+var PassengerServiceSendVerifyCodeResult_Success_DEFAULT *SendVerifyCodeResp
+
+func (p *PassengerServiceSendVerifyCodeResult) GetSuccess() (v *SendVerifyCodeResp) {
+	if !p.IsSetSuccess() {
+		return PassengerServiceSendVerifyCodeResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *PassengerServiceSendVerifyCodeResult) SetSuccess(x interface{}) {
+	p.Success = x.(*SendVerifyCodeResp)
+}
+
+func (p *PassengerServiceSendVerifyCodeResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *PassengerServiceSendVerifyCodeResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("PassengerServiceSendVerifyCodeResult(%+v)", *p)
+}
+
+var fieldIDToName_PassengerServiceSendVerifyCodeResult = map[int16]string{
 	0: "success",
 }

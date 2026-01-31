@@ -3,20 +3,69 @@
 package orderservice
 
 import (
-	order "group/kitex_gen/car/order"
 	"context"
 	"errors"
 	client "github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
+	order "group/kitex_gen/car/order"
 )
 
 var errInvalidMessageType = errors.New("invalid message type for service method handler")
 
 var serviceMethods = map[string]kitex.MethodInfo{
-	"OrderDetail": kitex.NewMethodInfo(
-		orderDetailHandler,
-		newOrderServiceOrderDetailArgs,
-		newOrderServiceOrderDetailResult,
+	"TripPublish": kitex.NewMethodInfo(
+		tripPublishHandler,
+		newOrderServiceTripPublishArgs,
+		newOrderServiceTripPublishResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"DriverTripPublish": kitex.NewMethodInfo(
+		driverTripPublishHandler,
+		newOrderServiceDriverTripPublishArgs,
+		newOrderServiceDriverTripPublishResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"TripQuery": kitex.NewMethodInfo(
+		tripQueryHandler,
+		newOrderServiceTripQueryArgs,
+		newOrderServiceTripQueryResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"PassengerHelp": kitex.NewMethodInfo(
+		passengerHelpHandler,
+		newOrderServicePassengerHelpArgs,
+		newOrderServicePassengerHelpResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"TripShare": kitex.NewMethodInfo(
+		tripShareHandler,
+		newOrderServiceTripShareArgs,
+		newOrderServiceTripShareResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"TripDetail": kitex.NewMethodInfo(
+		tripDetailHandler,
+		newOrderServiceTripDetailArgs,
+		newOrderServiceTripDetailResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"DataExport": kitex.NewMethodInfo(
+		dataExportHandler,
+		newOrderServiceDataExportArgs,
+		newOrderServiceDataExportResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"ExportRecordQuery": kitex.NewMethodInfo(
+		exportRecordQueryHandler,
+		newOrderServiceExportRecordQueryArgs,
+		newOrderServiceExportRecordQueryResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
@@ -86,22 +135,148 @@ func newServiceInfo(hasStreaming bool, keepStreamingMethods bool, keepNonStreami
 	return svcInfo
 }
 
-func orderDetailHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*order.OrderServiceOrderDetailArgs)
-	realResult := result.(*order.OrderServiceOrderDetailResult)
-	success, err := handler.(order.OrderService).OrderDetail(ctx, realArg.Req)
+func tripPublishHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*order.OrderServiceTripPublishArgs)
+	realResult := result.(*order.OrderServiceTripPublishResult)
+	success, err := handler.(order.OrderService).TripPublish(ctx, realArg.Req)
 	if err != nil {
 		return err
 	}
 	realResult.Success = success
 	return nil
 }
-func newOrderServiceOrderDetailArgs() interface{} {
-	return order.NewOrderServiceOrderDetailArgs()
+func newOrderServiceTripPublishArgs() interface{} {
+	return order.NewOrderServiceTripPublishArgs()
 }
 
-func newOrderServiceOrderDetailResult() interface{} {
-	return order.NewOrderServiceOrderDetailResult()
+func newOrderServiceTripPublishResult() interface{} {
+	return order.NewOrderServiceTripPublishResult()
+}
+
+func driverTripPublishHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*order.OrderServiceDriverTripPublishArgs)
+	realResult := result.(*order.OrderServiceDriverTripPublishResult)
+	success, err := handler.(order.OrderService).DriverTripPublish(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newOrderServiceDriverTripPublishArgs() interface{} {
+	return order.NewOrderServiceDriverTripPublishArgs()
+}
+
+func newOrderServiceDriverTripPublishResult() interface{} {
+	return order.NewOrderServiceDriverTripPublishResult()
+}
+
+func tripQueryHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*order.OrderServiceTripQueryArgs)
+	realResult := result.(*order.OrderServiceTripQueryResult)
+	success, err := handler.(order.OrderService).TripQuery(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newOrderServiceTripQueryArgs() interface{} {
+	return order.NewOrderServiceTripQueryArgs()
+}
+
+func newOrderServiceTripQueryResult() interface{} {
+	return order.NewOrderServiceTripQueryResult()
+}
+
+func passengerHelpHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*order.OrderServicePassengerHelpArgs)
+	realResult := result.(*order.OrderServicePassengerHelpResult)
+	success, err := handler.(order.OrderService).PassengerHelp(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newOrderServicePassengerHelpArgs() interface{} {
+	return order.NewOrderServicePassengerHelpArgs()
+}
+
+func newOrderServicePassengerHelpResult() interface{} {
+	return order.NewOrderServicePassengerHelpResult()
+}
+
+func tripShareHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*order.OrderServiceTripShareArgs)
+	realResult := result.(*order.OrderServiceTripShareResult)
+	success, err := handler.(order.OrderService).TripShare(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newOrderServiceTripShareArgs() interface{} {
+	return order.NewOrderServiceTripShareArgs()
+}
+
+func newOrderServiceTripShareResult() interface{} {
+	return order.NewOrderServiceTripShareResult()
+}
+
+func tripDetailHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*order.OrderServiceTripDetailArgs)
+	realResult := result.(*order.OrderServiceTripDetailResult)
+	success, err := handler.(order.OrderService).TripDetail(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newOrderServiceTripDetailArgs() interface{} {
+	return order.NewOrderServiceTripDetailArgs()
+}
+
+func newOrderServiceTripDetailResult() interface{} {
+	return order.NewOrderServiceTripDetailResult()
+}
+
+func dataExportHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*order.OrderServiceDataExportArgs)
+	realResult := result.(*order.OrderServiceDataExportResult)
+	success, err := handler.(order.OrderService).DataExport(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newOrderServiceDataExportArgs() interface{} {
+	return order.NewOrderServiceDataExportArgs()
+}
+
+func newOrderServiceDataExportResult() interface{} {
+	return order.NewOrderServiceDataExportResult()
+}
+
+func exportRecordQueryHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*order.OrderServiceExportRecordQueryArgs)
+	realResult := result.(*order.OrderServiceExportRecordQueryResult)
+	success, err := handler.(order.OrderService).ExportRecordQuery(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newOrderServiceExportRecordQueryArgs() interface{} {
+	return order.NewOrderServiceExportRecordQueryArgs()
+}
+
+func newOrderServiceExportRecordQueryResult() interface{} {
+	return order.NewOrderServiceExportRecordQueryResult()
 }
 
 type kClient struct {
@@ -114,11 +289,81 @@ func newServiceClient(c client.Client) *kClient {
 	}
 }
 
-func (p *kClient) OrderDetail(ctx context.Context, req *order.OrderDetailReq) (r *order.OrderDetailResp, err error) {
-	var _args order.OrderServiceOrderDetailArgs
+func (p *kClient) TripPublish(ctx context.Context, req *order.TripPublishReq) (r *order.TripPublishResp, err error) {
+	var _args order.OrderServiceTripPublishArgs
 	_args.Req = req
-	var _result order.OrderServiceOrderDetailResult
-	if err = p.c.Call(ctx, "OrderDetail", &_args, &_result); err != nil {
+	var _result order.OrderServiceTripPublishResult
+	if err = p.c.Call(ctx, "TripPublish", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DriverTripPublish(ctx context.Context, req *order.DriverTripPublishReq) (r *order.DriverTripPublishResp, err error) {
+	var _args order.OrderServiceDriverTripPublishArgs
+	_args.Req = req
+	var _result order.OrderServiceDriverTripPublishResult
+	if err = p.c.Call(ctx, "DriverTripPublish", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) TripQuery(ctx context.Context, req *order.TripQueryReq) (r *order.TripQueryResp, err error) {
+	var _args order.OrderServiceTripQueryArgs
+	_args.Req = req
+	var _result order.OrderServiceTripQueryResult
+	if err = p.c.Call(ctx, "TripQuery", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) PassengerHelp(ctx context.Context, req *order.PassengerHelpReq) (r *order.PassengerHelpResp, err error) {
+	var _args order.OrderServicePassengerHelpArgs
+	_args.Req = req
+	var _result order.OrderServicePassengerHelpResult
+	if err = p.c.Call(ctx, "PassengerHelp", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) TripShare(ctx context.Context, req *order.TripShareReq) (r *order.TripShareResp, err error) {
+	var _args order.OrderServiceTripShareArgs
+	_args.Req = req
+	var _result order.OrderServiceTripShareResult
+	if err = p.c.Call(ctx, "TripShare", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) TripDetail(ctx context.Context, req *order.TripDetailReq) (r *order.TripDetailResp, err error) {
+	var _args order.OrderServiceTripDetailArgs
+	_args.Req = req
+	var _result order.OrderServiceTripDetailResult
+	if err = p.c.Call(ctx, "TripDetail", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DataExport(ctx context.Context, req *order.DataExportReq) (r *order.DataExportResp, err error) {
+	var _args order.OrderServiceDataExportArgs
+	_args.Req = req
+	var _result order.OrderServiceDataExportResult
+	if err = p.c.Call(ctx, "DataExport", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) ExportRecordQuery(ctx context.Context, req *order.ExportRecordQueryReq) (r *order.ExportRecordQueryResp, err error) {
+	var _args order.OrderServiceExportRecordQueryArgs
+	_args.Req = req
+	var _result order.OrderServiceExportRecordQueryResult
+	if err = p.c.Call(ctx, "ExportRecordQuery", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

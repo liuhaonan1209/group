@@ -110,8 +110,628 @@ var fieldIDToName_DriverDetailResp = map[int16]string{
 	6: "rating",
 }
 
+type DriverRegisterReq struct {
+	Name           string  `thrift:"name,1" frugal:"1,default,string" json:"name"`
+	Tel            string  `thrift:"tel,2" frugal:"2,default,string" json:"tel"`
+	IDCard         string  `thrift:"IDCard,3" frugal:"3,default,string" json:"IDCard"`
+	License        string  `thrift:"license,4" frugal:"4,default,string" json:"license"`
+	DrivingLicense *string `thrift:"drivingLicense,5,optional" frugal:"5,optional,string" json:"drivingLicense,omitempty"`
+	VehicleInfo    *string `thrift:"vehicleInfo,6,optional" frugal:"6,optional,string" json:"vehicleInfo,omitempty"`
+	Photo          *string `thrift:"photo,7,optional" frugal:"7,optional,string" json:"photo,omitempty"`
+}
+
+func NewDriverRegisterReq() *DriverRegisterReq {
+	return &DriverRegisterReq{}
+}
+
+func (p *DriverRegisterReq) InitDefault() {
+}
+
+func (p *DriverRegisterReq) GetName() (v string) {
+	return p.Name
+}
+
+func (p *DriverRegisterReq) GetTel() (v string) {
+	return p.Tel
+}
+
+func (p *DriverRegisterReq) GetIDCard() (v string) {
+	return p.IDCard
+}
+
+func (p *DriverRegisterReq) GetLicense() (v string) {
+	return p.License
+}
+
+var DriverRegisterReq_DrivingLicense_DEFAULT string
+
+func (p *DriverRegisterReq) GetDrivingLicense() (v string) {
+	if !p.IsSetDrivingLicense() {
+		return DriverRegisterReq_DrivingLicense_DEFAULT
+	}
+	return *p.DrivingLicense
+}
+
+var DriverRegisterReq_VehicleInfo_DEFAULT string
+
+func (p *DriverRegisterReq) GetVehicleInfo() (v string) {
+	if !p.IsSetVehicleInfo() {
+		return DriverRegisterReq_VehicleInfo_DEFAULT
+	}
+	return *p.VehicleInfo
+}
+
+var DriverRegisterReq_Photo_DEFAULT string
+
+func (p *DriverRegisterReq) GetPhoto() (v string) {
+	if !p.IsSetPhoto() {
+		return DriverRegisterReq_Photo_DEFAULT
+	}
+	return *p.Photo
+}
+func (p *DriverRegisterReq) SetName(val string) {
+	p.Name = val
+}
+func (p *DriverRegisterReq) SetTel(val string) {
+	p.Tel = val
+}
+func (p *DriverRegisterReq) SetIDCard(val string) {
+	p.IDCard = val
+}
+func (p *DriverRegisterReq) SetLicense(val string) {
+	p.License = val
+}
+func (p *DriverRegisterReq) SetDrivingLicense(val *string) {
+	p.DrivingLicense = val
+}
+func (p *DriverRegisterReq) SetVehicleInfo(val *string) {
+	p.VehicleInfo = val
+}
+func (p *DriverRegisterReq) SetPhoto(val *string) {
+	p.Photo = val
+}
+
+func (p *DriverRegisterReq) IsSetDrivingLicense() bool {
+	return p.DrivingLicense != nil
+}
+
+func (p *DriverRegisterReq) IsSetVehicleInfo() bool {
+	return p.VehicleInfo != nil
+}
+
+func (p *DriverRegisterReq) IsSetPhoto() bool {
+	return p.Photo != nil
+}
+
+func (p *DriverRegisterReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DriverRegisterReq(%+v)", *p)
+}
+
+var fieldIDToName_DriverRegisterReq = map[int16]string{
+	1: "name",
+	2: "tel",
+	3: "IDCard",
+	4: "license",
+	5: "drivingLicense",
+	6: "vehicleInfo",
+	7: "photo",
+}
+
+type DriverRegisterResp struct {
+	Id      int64  `thrift:"id,1" frugal:"1,default,i64" json:"id"`
+	Message string `thrift:"message,2" frugal:"2,default,string" json:"message"`
+	Success bool   `thrift:"success,3" frugal:"3,default,bool" json:"success"`
+}
+
+func NewDriverRegisterResp() *DriverRegisterResp {
+	return &DriverRegisterResp{}
+}
+
+func (p *DriverRegisterResp) InitDefault() {
+}
+
+func (p *DriverRegisterResp) GetId() (v int64) {
+	return p.Id
+}
+
+func (p *DriverRegisterResp) GetMessage() (v string) {
+	return p.Message
+}
+
+func (p *DriverRegisterResp) GetSuccess() (v bool) {
+	return p.Success
+}
+func (p *DriverRegisterResp) SetId(val int64) {
+	p.Id = val
+}
+func (p *DriverRegisterResp) SetMessage(val string) {
+	p.Message = val
+}
+func (p *DriverRegisterResp) SetSuccess(val bool) {
+	p.Success = val
+}
+
+func (p *DriverRegisterResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DriverRegisterResp(%+v)", *p)
+}
+
+var fieldIDToName_DriverRegisterResp = map[int16]string{
+	1: "id",
+	2: "message",
+	3: "success",
+}
+
+type DriverVerifyReq struct {
+	Tel            string  `thrift:"tel,1" frugal:"1,default,string" json:"tel"`
+	IDCard         string  `thrift:"IDCard,2" frugal:"2,default,string" json:"IDCard"`
+	License        string  `thrift:"license,3" frugal:"3,default,string" json:"license"`
+	DrivingLicense *string `thrift:"drivingLicense,4,optional" frugal:"4,optional,string" json:"drivingLicense,omitempty"`
+	VehicleInfo    *string `thrift:"vehicleInfo,5,optional" frugal:"5,optional,string" json:"vehicleInfo,omitempty"`
+	Photo          *string `thrift:"photo,6,optional" frugal:"6,optional,string" json:"photo,omitempty"`
+}
+
+func NewDriverVerifyReq() *DriverVerifyReq {
+	return &DriverVerifyReq{}
+}
+
+func (p *DriverVerifyReq) InitDefault() {
+}
+
+func (p *DriverVerifyReq) GetTel() (v string) {
+	return p.Tel
+}
+
+func (p *DriverVerifyReq) GetIDCard() (v string) {
+	return p.IDCard
+}
+
+func (p *DriverVerifyReq) GetLicense() (v string) {
+	return p.License
+}
+
+var DriverVerifyReq_DrivingLicense_DEFAULT string
+
+func (p *DriverVerifyReq) GetDrivingLicense() (v string) {
+	if !p.IsSetDrivingLicense() {
+		return DriverVerifyReq_DrivingLicense_DEFAULT
+	}
+	return *p.DrivingLicense
+}
+
+var DriverVerifyReq_VehicleInfo_DEFAULT string
+
+func (p *DriverVerifyReq) GetVehicleInfo() (v string) {
+	if !p.IsSetVehicleInfo() {
+		return DriverVerifyReq_VehicleInfo_DEFAULT
+	}
+	return *p.VehicleInfo
+}
+
+var DriverVerifyReq_Photo_DEFAULT string
+
+func (p *DriverVerifyReq) GetPhoto() (v string) {
+	if !p.IsSetPhoto() {
+		return DriverVerifyReq_Photo_DEFAULT
+	}
+	return *p.Photo
+}
+func (p *DriverVerifyReq) SetTel(val string) {
+	p.Tel = val
+}
+func (p *DriverVerifyReq) SetIDCard(val string) {
+	p.IDCard = val
+}
+func (p *DriverVerifyReq) SetLicense(val string) {
+	p.License = val
+}
+func (p *DriverVerifyReq) SetDrivingLicense(val *string) {
+	p.DrivingLicense = val
+}
+func (p *DriverVerifyReq) SetVehicleInfo(val *string) {
+	p.VehicleInfo = val
+}
+func (p *DriverVerifyReq) SetPhoto(val *string) {
+	p.Photo = val
+}
+
+func (p *DriverVerifyReq) IsSetDrivingLicense() bool {
+	return p.DrivingLicense != nil
+}
+
+func (p *DriverVerifyReq) IsSetVehicleInfo() bool {
+	return p.VehicleInfo != nil
+}
+
+func (p *DriverVerifyReq) IsSetPhoto() bool {
+	return p.Photo != nil
+}
+
+func (p *DriverVerifyReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DriverVerifyReq(%+v)", *p)
+}
+
+var fieldIDToName_DriverVerifyReq = map[int16]string{
+	1: "tel",
+	2: "IDCard",
+	3: "license",
+	4: "drivingLicense",
+	5: "vehicleInfo",
+	6: "photo",
+}
+
+type DriverVerifyResp struct {
+	Verified bool   `thrift:"verified,1" frugal:"1,default,bool" json:"verified"`
+	Message  string `thrift:"message,2" frugal:"2,default,string" json:"message"`
+	DriverId *int64 `thrift:"driverId,3,optional" frugal:"3,optional,i64" json:"driverId,omitempty"`
+}
+
+func NewDriverVerifyResp() *DriverVerifyResp {
+	return &DriverVerifyResp{}
+}
+
+func (p *DriverVerifyResp) InitDefault() {
+}
+
+func (p *DriverVerifyResp) GetVerified() (v bool) {
+	return p.Verified
+}
+
+func (p *DriverVerifyResp) GetMessage() (v string) {
+	return p.Message
+}
+
+var DriverVerifyResp_DriverId_DEFAULT int64
+
+func (p *DriverVerifyResp) GetDriverId() (v int64) {
+	if !p.IsSetDriverId() {
+		return DriverVerifyResp_DriverId_DEFAULT
+	}
+	return *p.DriverId
+}
+func (p *DriverVerifyResp) SetVerified(val bool) {
+	p.Verified = val
+}
+func (p *DriverVerifyResp) SetMessage(val string) {
+	p.Message = val
+}
+func (p *DriverVerifyResp) SetDriverId(val *int64) {
+	p.DriverId = val
+}
+
+func (p *DriverVerifyResp) IsSetDriverId() bool {
+	return p.DriverId != nil
+}
+
+func (p *DriverVerifyResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DriverVerifyResp(%+v)", *p)
+}
+
+var fieldIDToName_DriverVerifyResp = map[int16]string{
+	1: "verified",
+	2: "message",
+	3: "driverId",
+}
+
+type DriverConfigQueryReq struct {
+	DriverId int64 `thrift:"driverId,1" frugal:"1,default,i64" json:"driverId"`
+}
+
+func NewDriverConfigQueryReq() *DriverConfigQueryReq {
+	return &DriverConfigQueryReq{}
+}
+
+func (p *DriverConfigQueryReq) InitDefault() {
+}
+
+func (p *DriverConfigQueryReq) GetDriverId() (v int64) {
+	return p.DriverId
+}
+func (p *DriverConfigQueryReq) SetDriverId(val int64) {
+	p.DriverId = val
+}
+
+func (p *DriverConfigQueryReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DriverConfigQueryReq(%+v)", *p)
+}
+
+var fieldIDToName_DriverConfigQueryReq = map[int16]string{
+	1: "driverId",
+}
+
+type DriverConfigInfo struct {
+	DriverId        int64   `thrift:"driverId,1" frugal:"1,default,i64" json:"driverId"`
+	CanPublishTrip  bool    `thrift:"canPublishTrip,2" frugal:"2,default,bool" json:"canPublishTrip"`
+	AutoNotify      bool    `thrift:"autoNotify,3" frugal:"3,default,bool" json:"autoNotify"`
+	MaxPassengers   int32   `thrift:"maxPassengers,4" frugal:"4,default,i32" json:"maxPassengers"`
+	StartPrice      float64 `thrift:"startPrice,5" frugal:"5,default,double" json:"startPrice"`
+	PricePerKm      float64 `thrift:"pricePerKm,6" frugal:"6,default,double" json:"pricePerKm"`
+	VehicleNumber   string  `thrift:"vehicleNumber,7" frugal:"7,default,string" json:"vehicleNumber"`
+	VehicleType     string  `thrift:"vehicleType,8" frugal:"8,default,string" json:"vehicleType"`
+	InsuranceExpiry string  `thrift:"insuranceExpiry,9" frugal:"9,default,string" json:"insuranceExpiry"`
+	IsCompliant     bool    `thrift:"isCompliant,10" frugal:"10,default,bool" json:"isCompliant"`
+}
+
+func NewDriverConfigInfo() *DriverConfigInfo {
+	return &DriverConfigInfo{}
+}
+
+func (p *DriverConfigInfo) InitDefault() {
+}
+
+func (p *DriverConfigInfo) GetDriverId() (v int64) {
+	return p.DriverId
+}
+
+func (p *DriverConfigInfo) GetCanPublishTrip() (v bool) {
+	return p.CanPublishTrip
+}
+
+func (p *DriverConfigInfo) GetAutoNotify() (v bool) {
+	return p.AutoNotify
+}
+
+func (p *DriverConfigInfo) GetMaxPassengers() (v int32) {
+	return p.MaxPassengers
+}
+
+func (p *DriverConfigInfo) GetStartPrice() (v float64) {
+	return p.StartPrice
+}
+
+func (p *DriverConfigInfo) GetPricePerKm() (v float64) {
+	return p.PricePerKm
+}
+
+func (p *DriverConfigInfo) GetVehicleNumber() (v string) {
+	return p.VehicleNumber
+}
+
+func (p *DriverConfigInfo) GetVehicleType() (v string) {
+	return p.VehicleType
+}
+
+func (p *DriverConfigInfo) GetInsuranceExpiry() (v string) {
+	return p.InsuranceExpiry
+}
+
+func (p *DriverConfigInfo) GetIsCompliant() (v bool) {
+	return p.IsCompliant
+}
+func (p *DriverConfigInfo) SetDriverId(val int64) {
+	p.DriverId = val
+}
+func (p *DriverConfigInfo) SetCanPublishTrip(val bool) {
+	p.CanPublishTrip = val
+}
+func (p *DriverConfigInfo) SetAutoNotify(val bool) {
+	p.AutoNotify = val
+}
+func (p *DriverConfigInfo) SetMaxPassengers(val int32) {
+	p.MaxPassengers = val
+}
+func (p *DriverConfigInfo) SetStartPrice(val float64) {
+	p.StartPrice = val
+}
+func (p *DriverConfigInfo) SetPricePerKm(val float64) {
+	p.PricePerKm = val
+}
+func (p *DriverConfigInfo) SetVehicleNumber(val string) {
+	p.VehicleNumber = val
+}
+func (p *DriverConfigInfo) SetVehicleType(val string) {
+	p.VehicleType = val
+}
+func (p *DriverConfigInfo) SetInsuranceExpiry(val string) {
+	p.InsuranceExpiry = val
+}
+func (p *DriverConfigInfo) SetIsCompliant(val bool) {
+	p.IsCompliant = val
+}
+
+func (p *DriverConfigInfo) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DriverConfigInfo(%+v)", *p)
+}
+
+var fieldIDToName_DriverConfigInfo = map[int16]string{
+	1:  "driverId",
+	2:  "canPublishTrip",
+	3:  "autoNotify",
+	4:  "maxPassengers",
+	5:  "startPrice",
+	6:  "pricePerKm",
+	7:  "vehicleNumber",
+	8:  "vehicleType",
+	9:  "insuranceExpiry",
+	10: "isCompliant",
+}
+
+type DriverConfigQueryResp struct {
+	Config  *DriverConfigInfo `thrift:"config,1,optional" frugal:"1,optional,DriverConfigInfo" json:"config,omitempty"`
+	Message string            `thrift:"message,2" frugal:"2,default,string" json:"message"`
+	Success bool              `thrift:"success,3" frugal:"3,default,bool" json:"success"`
+}
+
+func NewDriverConfigQueryResp() *DriverConfigQueryResp {
+	return &DriverConfigQueryResp{}
+}
+
+func (p *DriverConfigQueryResp) InitDefault() {
+}
+
+var DriverConfigQueryResp_Config_DEFAULT *DriverConfigInfo
+
+func (p *DriverConfigQueryResp) GetConfig() (v *DriverConfigInfo) {
+	if !p.IsSetConfig() {
+		return DriverConfigQueryResp_Config_DEFAULT
+	}
+	return p.Config
+}
+
+func (p *DriverConfigQueryResp) GetMessage() (v string) {
+	return p.Message
+}
+
+func (p *DriverConfigQueryResp) GetSuccess() (v bool) {
+	return p.Success
+}
+func (p *DriverConfigQueryResp) SetConfig(val *DriverConfigInfo) {
+	p.Config = val
+}
+func (p *DriverConfigQueryResp) SetMessage(val string) {
+	p.Message = val
+}
+func (p *DriverConfigQueryResp) SetSuccess(val bool) {
+	p.Success = val
+}
+
+func (p *DriverConfigQueryResp) IsSetConfig() bool {
+	return p.Config != nil
+}
+
+func (p *DriverConfigQueryResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DriverConfigQueryResp(%+v)", *p)
+}
+
+var fieldIDToName_DriverConfigQueryResp = map[int16]string{
+	1: "config",
+	2: "message",
+	3: "success",
+}
+
+type VehicleComplianceCheckReq struct {
+	DriverId        int64  `thrift:"driverId,1" frugal:"1,default,i64" json:"driverId"`
+	VehicleNumber   string `thrift:"vehicleNumber,2" frugal:"2,default,string" json:"vehicleNumber"`
+	InsuranceExpiry string `thrift:"insuranceExpiry,3" frugal:"3,default,string" json:"insuranceExpiry"`
+}
+
+func NewVehicleComplianceCheckReq() *VehicleComplianceCheckReq {
+	return &VehicleComplianceCheckReq{}
+}
+
+func (p *VehicleComplianceCheckReq) InitDefault() {
+}
+
+func (p *VehicleComplianceCheckReq) GetDriverId() (v int64) {
+	return p.DriverId
+}
+
+func (p *VehicleComplianceCheckReq) GetVehicleNumber() (v string) {
+	return p.VehicleNumber
+}
+
+func (p *VehicleComplianceCheckReq) GetInsuranceExpiry() (v string) {
+	return p.InsuranceExpiry
+}
+func (p *VehicleComplianceCheckReq) SetDriverId(val int64) {
+	p.DriverId = val
+}
+func (p *VehicleComplianceCheckReq) SetVehicleNumber(val string) {
+	p.VehicleNumber = val
+}
+func (p *VehicleComplianceCheckReq) SetInsuranceExpiry(val string) {
+	p.InsuranceExpiry = val
+}
+
+func (p *VehicleComplianceCheckReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("VehicleComplianceCheckReq(%+v)", *p)
+}
+
+var fieldIDToName_VehicleComplianceCheckReq = map[int16]string{
+	1: "driverId",
+	2: "vehicleNumber",
+	3: "insuranceExpiry",
+}
+
+type VehicleComplianceCheckResp struct {
+	IsCompliant bool     `thrift:"isCompliant,1" frugal:"1,default,bool" json:"isCompliant"`
+	Issues      []string `thrift:"issues,2" frugal:"2,default,list<string>" json:"issues"`
+	Message     string   `thrift:"message,3" frugal:"3,default,string" json:"message"`
+	Success     bool     `thrift:"success,4" frugal:"4,default,bool" json:"success"`
+}
+
+func NewVehicleComplianceCheckResp() *VehicleComplianceCheckResp {
+	return &VehicleComplianceCheckResp{}
+}
+
+func (p *VehicleComplianceCheckResp) InitDefault() {
+}
+
+func (p *VehicleComplianceCheckResp) GetIsCompliant() (v bool) {
+	return p.IsCompliant
+}
+
+func (p *VehicleComplianceCheckResp) GetIssues() (v []string) {
+	return p.Issues
+}
+
+func (p *VehicleComplianceCheckResp) GetMessage() (v string) {
+	return p.Message
+}
+
+func (p *VehicleComplianceCheckResp) GetSuccess() (v bool) {
+	return p.Success
+}
+func (p *VehicleComplianceCheckResp) SetIsCompliant(val bool) {
+	p.IsCompliant = val
+}
+func (p *VehicleComplianceCheckResp) SetIssues(val []string) {
+	p.Issues = val
+}
+func (p *VehicleComplianceCheckResp) SetMessage(val string) {
+	p.Message = val
+}
+func (p *VehicleComplianceCheckResp) SetSuccess(val bool) {
+	p.Success = val
+}
+
+func (p *VehicleComplianceCheckResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("VehicleComplianceCheckResp(%+v)", *p)
+}
+
+var fieldIDToName_VehicleComplianceCheckResp = map[int16]string{
+	1: "isCompliant",
+	2: "issues",
+	3: "message",
+	4: "success",
+}
+
 type DriverService interface {
 	DriverDetail(ctx context.Context, req *DriverDetailReq) (r *DriverDetailResp, err error)
+
+	DriverRegister(ctx context.Context, req *DriverRegisterReq) (r *DriverRegisterResp, err error)
+
+	DriverVerify(ctx context.Context, req *DriverVerifyReq) (r *DriverVerifyResp, err error)
+
+	DriverConfigQuery(ctx context.Context, req *DriverConfigQueryReq) (r *DriverConfigQueryResp, err error)
+
+	VehicleComplianceCheck(ctx context.Context, req *VehicleComplianceCheckReq) (r *VehicleComplianceCheckResp, err error)
 }
 
 type DriverServiceDriverDetailArgs struct {
@@ -187,5 +807,309 @@ func (p *DriverServiceDriverDetailResult) String() string {
 }
 
 var fieldIDToName_DriverServiceDriverDetailResult = map[int16]string{
+	0: "success",
+}
+
+type DriverServiceDriverRegisterArgs struct {
+	Req *DriverRegisterReq `thrift:"req,1" frugal:"1,default,DriverRegisterReq" json:"req"`
+}
+
+func NewDriverServiceDriverRegisterArgs() *DriverServiceDriverRegisterArgs {
+	return &DriverServiceDriverRegisterArgs{}
+}
+
+func (p *DriverServiceDriverRegisterArgs) InitDefault() {
+}
+
+var DriverServiceDriverRegisterArgs_Req_DEFAULT *DriverRegisterReq
+
+func (p *DriverServiceDriverRegisterArgs) GetReq() (v *DriverRegisterReq) {
+	if !p.IsSetReq() {
+		return DriverServiceDriverRegisterArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *DriverServiceDriverRegisterArgs) SetReq(val *DriverRegisterReq) {
+	p.Req = val
+}
+
+func (p *DriverServiceDriverRegisterArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DriverServiceDriverRegisterArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DriverServiceDriverRegisterArgs(%+v)", *p)
+}
+
+var fieldIDToName_DriverServiceDriverRegisterArgs = map[int16]string{
+	1: "req",
+}
+
+type DriverServiceDriverRegisterResult struct {
+	Success *DriverRegisterResp `thrift:"success,0,optional" frugal:"0,optional,DriverRegisterResp" json:"success,omitempty"`
+}
+
+func NewDriverServiceDriverRegisterResult() *DriverServiceDriverRegisterResult {
+	return &DriverServiceDriverRegisterResult{}
+}
+
+func (p *DriverServiceDriverRegisterResult) InitDefault() {
+}
+
+var DriverServiceDriverRegisterResult_Success_DEFAULT *DriverRegisterResp
+
+func (p *DriverServiceDriverRegisterResult) GetSuccess() (v *DriverRegisterResp) {
+	if !p.IsSetSuccess() {
+		return DriverServiceDriverRegisterResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *DriverServiceDriverRegisterResult) SetSuccess(x interface{}) {
+	p.Success = x.(*DriverRegisterResp)
+}
+
+func (p *DriverServiceDriverRegisterResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DriverServiceDriverRegisterResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DriverServiceDriverRegisterResult(%+v)", *p)
+}
+
+var fieldIDToName_DriverServiceDriverRegisterResult = map[int16]string{
+	0: "success",
+}
+
+type DriverServiceDriverVerifyArgs struct {
+	Req *DriverVerifyReq `thrift:"req,1" frugal:"1,default,DriverVerifyReq" json:"req"`
+}
+
+func NewDriverServiceDriverVerifyArgs() *DriverServiceDriverVerifyArgs {
+	return &DriverServiceDriverVerifyArgs{}
+}
+
+func (p *DriverServiceDriverVerifyArgs) InitDefault() {
+}
+
+var DriverServiceDriverVerifyArgs_Req_DEFAULT *DriverVerifyReq
+
+func (p *DriverServiceDriverVerifyArgs) GetReq() (v *DriverVerifyReq) {
+	if !p.IsSetReq() {
+		return DriverServiceDriverVerifyArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *DriverServiceDriverVerifyArgs) SetReq(val *DriverVerifyReq) {
+	p.Req = val
+}
+
+func (p *DriverServiceDriverVerifyArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DriverServiceDriverVerifyArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DriverServiceDriverVerifyArgs(%+v)", *p)
+}
+
+var fieldIDToName_DriverServiceDriverVerifyArgs = map[int16]string{
+	1: "req",
+}
+
+type DriverServiceDriverVerifyResult struct {
+	Success *DriverVerifyResp `thrift:"success,0,optional" frugal:"0,optional,DriverVerifyResp" json:"success,omitempty"`
+}
+
+func NewDriverServiceDriverVerifyResult() *DriverServiceDriverVerifyResult {
+	return &DriverServiceDriverVerifyResult{}
+}
+
+func (p *DriverServiceDriverVerifyResult) InitDefault() {
+}
+
+var DriverServiceDriverVerifyResult_Success_DEFAULT *DriverVerifyResp
+
+func (p *DriverServiceDriverVerifyResult) GetSuccess() (v *DriverVerifyResp) {
+	if !p.IsSetSuccess() {
+		return DriverServiceDriverVerifyResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *DriverServiceDriverVerifyResult) SetSuccess(x interface{}) {
+	p.Success = x.(*DriverVerifyResp)
+}
+
+func (p *DriverServiceDriverVerifyResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DriverServiceDriverVerifyResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DriverServiceDriverVerifyResult(%+v)", *p)
+}
+
+var fieldIDToName_DriverServiceDriverVerifyResult = map[int16]string{
+	0: "success",
+}
+
+type DriverServiceDriverConfigQueryArgs struct {
+	Req *DriverConfigQueryReq `thrift:"req,1" frugal:"1,default,DriverConfigQueryReq" json:"req"`
+}
+
+func NewDriverServiceDriverConfigQueryArgs() *DriverServiceDriverConfigQueryArgs {
+	return &DriverServiceDriverConfigQueryArgs{}
+}
+
+func (p *DriverServiceDriverConfigQueryArgs) InitDefault() {
+}
+
+var DriverServiceDriverConfigQueryArgs_Req_DEFAULT *DriverConfigQueryReq
+
+func (p *DriverServiceDriverConfigQueryArgs) GetReq() (v *DriverConfigQueryReq) {
+	if !p.IsSetReq() {
+		return DriverServiceDriverConfigQueryArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *DriverServiceDriverConfigQueryArgs) SetReq(val *DriverConfigQueryReq) {
+	p.Req = val
+}
+
+func (p *DriverServiceDriverConfigQueryArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DriverServiceDriverConfigQueryArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DriverServiceDriverConfigQueryArgs(%+v)", *p)
+}
+
+var fieldIDToName_DriverServiceDriverConfigQueryArgs = map[int16]string{
+	1: "req",
+}
+
+type DriverServiceDriverConfigQueryResult struct {
+	Success *DriverConfigQueryResp `thrift:"success,0,optional" frugal:"0,optional,DriverConfigQueryResp" json:"success,omitempty"`
+}
+
+func NewDriverServiceDriverConfigQueryResult() *DriverServiceDriverConfigQueryResult {
+	return &DriverServiceDriverConfigQueryResult{}
+}
+
+func (p *DriverServiceDriverConfigQueryResult) InitDefault() {
+}
+
+var DriverServiceDriverConfigQueryResult_Success_DEFAULT *DriverConfigQueryResp
+
+func (p *DriverServiceDriverConfigQueryResult) GetSuccess() (v *DriverConfigQueryResp) {
+	if !p.IsSetSuccess() {
+		return DriverServiceDriverConfigQueryResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *DriverServiceDriverConfigQueryResult) SetSuccess(x interface{}) {
+	p.Success = x.(*DriverConfigQueryResp)
+}
+
+func (p *DriverServiceDriverConfigQueryResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DriverServiceDriverConfigQueryResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DriverServiceDriverConfigQueryResult(%+v)", *p)
+}
+
+var fieldIDToName_DriverServiceDriverConfigQueryResult = map[int16]string{
+	0: "success",
+}
+
+type DriverServiceVehicleComplianceCheckArgs struct {
+	Req *VehicleComplianceCheckReq `thrift:"req,1" frugal:"1,default,VehicleComplianceCheckReq" json:"req"`
+}
+
+func NewDriverServiceVehicleComplianceCheckArgs() *DriverServiceVehicleComplianceCheckArgs {
+	return &DriverServiceVehicleComplianceCheckArgs{}
+}
+
+func (p *DriverServiceVehicleComplianceCheckArgs) InitDefault() {
+}
+
+var DriverServiceVehicleComplianceCheckArgs_Req_DEFAULT *VehicleComplianceCheckReq
+
+func (p *DriverServiceVehicleComplianceCheckArgs) GetReq() (v *VehicleComplianceCheckReq) {
+	if !p.IsSetReq() {
+		return DriverServiceVehicleComplianceCheckArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *DriverServiceVehicleComplianceCheckArgs) SetReq(val *VehicleComplianceCheckReq) {
+	p.Req = val
+}
+
+func (p *DriverServiceVehicleComplianceCheckArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DriverServiceVehicleComplianceCheckArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DriverServiceVehicleComplianceCheckArgs(%+v)", *p)
+}
+
+var fieldIDToName_DriverServiceVehicleComplianceCheckArgs = map[int16]string{
+	1: "req",
+}
+
+type DriverServiceVehicleComplianceCheckResult struct {
+	Success *VehicleComplianceCheckResp `thrift:"success,0,optional" frugal:"0,optional,VehicleComplianceCheckResp" json:"success,omitempty"`
+}
+
+func NewDriverServiceVehicleComplianceCheckResult() *DriverServiceVehicleComplianceCheckResult {
+	return &DriverServiceVehicleComplianceCheckResult{}
+}
+
+func (p *DriverServiceVehicleComplianceCheckResult) InitDefault() {
+}
+
+var DriverServiceVehicleComplianceCheckResult_Success_DEFAULT *VehicleComplianceCheckResp
+
+func (p *DriverServiceVehicleComplianceCheckResult) GetSuccess() (v *VehicleComplianceCheckResp) {
+	if !p.IsSetSuccess() {
+		return DriverServiceVehicleComplianceCheckResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *DriverServiceVehicleComplianceCheckResult) SetSuccess(x interface{}) {
+	p.Success = x.(*VehicleComplianceCheckResp)
+}
+
+func (p *DriverServiceVehicleComplianceCheckResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DriverServiceVehicleComplianceCheckResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DriverServiceVehicleComplianceCheckResult(%+v)", *p)
+}
+
+var fieldIDToName_DriverServiceVehicleComplianceCheckResult = map[int16]string{
 	0: "success",
 }

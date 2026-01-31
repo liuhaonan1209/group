@@ -2,8 +2,8 @@
 package passengerservice
 
 import (
-	passenger "group/kitex_gen/car/passenger"
 	server "github.com/cloudwego/kitex/server"
+	passenger "group/kitex_gen/car/passenger"
 )
 
 // NewServer creates a server.Server with the given handler and options.

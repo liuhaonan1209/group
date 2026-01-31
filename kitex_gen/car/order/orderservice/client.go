@@ -3,15 +3,22 @@
 package orderservice
 
 import (
-	order "group/kitex_gen/car/order"
 	"context"
 	client "github.com/cloudwego/kitex/client"
 	callopt "github.com/cloudwego/kitex/client/callopt"
+	order "group/kitex_gen/car/order"
 )
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
-	OrderDetail(ctx context.Context, req *order.OrderDetailReq, callOptions ...callopt.Option) (r *order.OrderDetailResp, err error)
+	TripPublish(ctx context.Context, req *order.TripPublishReq, callOptions ...callopt.Option) (r *order.TripPublishResp, err error)
+	DriverTripPublish(ctx context.Context, req *order.DriverTripPublishReq, callOptions ...callopt.Option) (r *order.DriverTripPublishResp, err error)
+	TripQuery(ctx context.Context, req *order.TripQueryReq, callOptions ...callopt.Option) (r *order.TripQueryResp, err error)
+	PassengerHelp(ctx context.Context, req *order.PassengerHelpReq, callOptions ...callopt.Option) (r *order.PassengerHelpResp, err error)
+	TripShare(ctx context.Context, req *order.TripShareReq, callOptions ...callopt.Option) (r *order.TripShareResp, err error)
+	TripDetail(ctx context.Context, req *order.TripDetailReq, callOptions ...callopt.Option) (r *order.TripDetailResp, err error)
+	DataExport(ctx context.Context, req *order.DataExportReq, callOptions ...callopt.Option) (r *order.DataExportResp, err error)
+	ExportRecordQuery(ctx context.Context, req *order.ExportRecordQueryReq, callOptions ...callopt.Option) (r *order.ExportRecordQueryResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -43,7 +50,42 @@ type kOrderServiceClient struct {
 	*kClient
 }
 
-func (p *kOrderServiceClient) OrderDetail(ctx context.Context, req *order.OrderDetailReq, callOptions ...callopt.Option) (r *order.OrderDetailResp, err error) {
+func (p *kOrderServiceClient) TripPublish(ctx context.Context, req *order.TripPublishReq, callOptions ...callopt.Option) (r *order.TripPublishResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.OrderDetail(ctx, req)
+	return p.kClient.TripPublish(ctx, req)
+}
+
+func (p *kOrderServiceClient) DriverTripPublish(ctx context.Context, req *order.DriverTripPublishReq, callOptions ...callopt.Option) (r *order.DriverTripPublishResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DriverTripPublish(ctx, req)
+}
+
+func (p *kOrderServiceClient) TripQuery(ctx context.Context, req *order.TripQueryReq, callOptions ...callopt.Option) (r *order.TripQueryResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.TripQuery(ctx, req)
+}
+
+func (p *kOrderServiceClient) PassengerHelp(ctx context.Context, req *order.PassengerHelpReq, callOptions ...callopt.Option) (r *order.PassengerHelpResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.PassengerHelp(ctx, req)
+}
+
+func (p *kOrderServiceClient) TripShare(ctx context.Context, req *order.TripShareReq, callOptions ...callopt.Option) (r *order.TripShareResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.TripShare(ctx, req)
+}
+
+func (p *kOrderServiceClient) TripDetail(ctx context.Context, req *order.TripDetailReq, callOptions ...callopt.Option) (r *order.TripDetailResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.TripDetail(ctx, req)
+}
+
+func (p *kOrderServiceClient) DataExport(ctx context.Context, req *order.DataExportReq, callOptions ...callopt.Option) (r *order.DataExportResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DataExport(ctx, req)
+}
+
+func (p *kOrderServiceClient) ExportRecordQuery(ctx context.Context, req *order.ExportRecordQueryReq, callOptions ...callopt.Option) (r *order.ExportRecordQueryResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.ExportRecordQuery(ctx, req)
 }

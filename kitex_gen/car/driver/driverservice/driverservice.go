@@ -3,12 +3,12 @@
 package driverservice
 
 import (
-	driver "group/kitex_gen/car/driver"
-	driver0 "group/kitex_gen/car/driver"
 	"context"
 	"errors"
 	client "github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
+	driver "group/kitex_gen/car/driver"
+	driver0 "group/kitex_gen/car/driver"
 )
 
 var errInvalidMessageType = errors.New("invalid message type for service method handler")
@@ -18,6 +18,34 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		driverDetailHandler,
 		newDriverServiceDriverDetailArgs,
 		newDriverServiceDriverDetailResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"DriverRegister": kitex.NewMethodInfo(
+		driverRegisterHandler,
+		newDriverServiceDriverRegisterArgs,
+		newDriverServiceDriverRegisterResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"DriverVerify": kitex.NewMethodInfo(
+		driverVerifyHandler,
+		newDriverServiceDriverVerifyArgs,
+		newDriverServiceDriverVerifyResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"DriverConfigQuery": kitex.NewMethodInfo(
+		driverConfigQueryHandler,
+		newDriverServiceDriverConfigQueryArgs,
+		newDriverServiceDriverConfigQueryResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"VehicleComplianceCheck": kitex.NewMethodInfo(
+		vehicleComplianceCheckHandler,
+		newDriverServiceVehicleComplianceCheckArgs,
+		newDriverServiceVehicleComplianceCheckResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
@@ -105,6 +133,78 @@ func newDriverServiceDriverDetailResult() interface{} {
 	return driver.NewDriverServiceDriverDetailResult()
 }
 
+func driverRegisterHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*driver.DriverServiceDriverRegisterArgs)
+	realResult := result.(*driver.DriverServiceDriverRegisterResult)
+	success, err := handler.(driver.DriverService).DriverRegister(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newDriverServiceDriverRegisterArgs() interface{} {
+	return driver.NewDriverServiceDriverRegisterArgs()
+}
+
+func newDriverServiceDriverRegisterResult() interface{} {
+	return driver.NewDriverServiceDriverRegisterResult()
+}
+
+func driverVerifyHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*driver.DriverServiceDriverVerifyArgs)
+	realResult := result.(*driver.DriverServiceDriverVerifyResult)
+	success, err := handler.(driver.DriverService).DriverVerify(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newDriverServiceDriverVerifyArgs() interface{} {
+	return driver.NewDriverServiceDriverVerifyArgs()
+}
+
+func newDriverServiceDriverVerifyResult() interface{} {
+	return driver.NewDriverServiceDriverVerifyResult()
+}
+
+func driverConfigQueryHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*driver.DriverServiceDriverConfigQueryArgs)
+	realResult := result.(*driver.DriverServiceDriverConfigQueryResult)
+	success, err := handler.(driver.DriverService).DriverConfigQuery(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newDriverServiceDriverConfigQueryArgs() interface{} {
+	return driver.NewDriverServiceDriverConfigQueryArgs()
+}
+
+func newDriverServiceDriverConfigQueryResult() interface{} {
+	return driver.NewDriverServiceDriverConfigQueryResult()
+}
+
+func vehicleComplianceCheckHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*driver.DriverServiceVehicleComplianceCheckArgs)
+	realResult := result.(*driver.DriverServiceVehicleComplianceCheckResult)
+	success, err := handler.(driver.DriverService).VehicleComplianceCheck(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newDriverServiceVehicleComplianceCheckArgs() interface{} {
+	return driver.NewDriverServiceVehicleComplianceCheckArgs()
+}
+
+func newDriverServiceVehicleComplianceCheckResult() interface{} {
+	return driver.NewDriverServiceVehicleComplianceCheckResult()
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -120,6 +220,46 @@ func (p *kClient) DriverDetail(ctx context.Context, req *driver0.DriverDetailReq
 	_args.Req = req
 	var _result driver.DriverServiceDriverDetailResult
 	if err = p.c.Call(ctx, "DriverDetail", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DriverRegister(ctx context.Context, req *driver0.DriverRegisterReq) (r *driver0.DriverRegisterResp, err error) {
+	var _args driver.DriverServiceDriverRegisterArgs
+	_args.Req = req
+	var _result driver.DriverServiceDriverRegisterResult
+	if err = p.c.Call(ctx, "DriverRegister", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DriverVerify(ctx context.Context, req *driver0.DriverVerifyReq) (r *driver0.DriverVerifyResp, err error) {
+	var _args driver.DriverServiceDriverVerifyArgs
+	_args.Req = req
+	var _result driver.DriverServiceDriverVerifyResult
+	if err = p.c.Call(ctx, "DriverVerify", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DriverConfigQuery(ctx context.Context, req *driver0.DriverConfigQueryReq) (r *driver0.DriverConfigQueryResp, err error) {
+	var _args driver.DriverServiceDriverConfigQueryArgs
+	_args.Req = req
+	var _result driver.DriverServiceDriverConfigQueryResult
+	if err = p.c.Call(ctx, "DriverConfigQuery", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) VehicleComplianceCheck(ctx context.Context, req *driver0.VehicleComplianceCheckReq) (r *driver0.VehicleComplianceCheckResp, err error) {
+	var _args driver.DriverServiceVehicleComplianceCheckArgs
+	_args.Req = req
+	var _result driver.DriverServiceVehicleComplianceCheckResult
+	if err = p.c.Call(ctx, "VehicleComplianceCheck", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

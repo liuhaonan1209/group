@@ -2,8 +2,8 @@
 package driverservice
 
 import (
-	driver "group/kitex_gen/car/driver"
 	server "github.com/cloudwego/kitex/server"
+	driver "group/kitex_gen/car/driver"
 )
 
 // NewServer creates a server.Server with the given handler and options.

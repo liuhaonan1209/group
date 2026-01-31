@@ -7,185 +7,1717 @@ import (
 	"fmt"
 )
 
-type OrderDetailReq struct {
-	Id int64 `thrift:"id,1" frugal:"1,default,i64" json:"id"`
+type TripPublishReq struct {
+	PassengerId   int64   `thrift:"passengerId,1" frugal:"1,default,i64" json:"passengerId"`
+	StartPoint    string  `thrift:"startPoint,2" frugal:"2,default,string" json:"startPoint"`
+	EndPoint      string  `thrift:"endPoint,3" frugal:"3,default,string" json:"endPoint"`
+	DepartureTime string  `thrift:"departureTime,4" frugal:"4,default,string" json:"departureTime"`
+	SpecialNeeds  *string `thrift:"specialNeeds,5,optional" frugal:"5,optional,string" json:"specialNeeds,omitempty"`
+	ContactWay    *string `thrift:"contactWay,6,optional" frugal:"6,optional,string" json:"contactWay,omitempty"`
 }
 
-func NewOrderDetailReq() *OrderDetailReq {
-	return &OrderDetailReq{}
+func NewTripPublishReq() *TripPublishReq {
+	return &TripPublishReq{}
 }
 
-func (p *OrderDetailReq) InitDefault() {
+func (p *TripPublishReq) InitDefault() {
 }
 
-func (p *OrderDetailReq) GetId() (v int64) {
-	return p.Id
-}
-func (p *OrderDetailReq) SetId(val int64) {
-	p.Id = val
+func (p *TripPublishReq) GetPassengerId() (v int64) {
+	return p.PassengerId
 }
 
-func (p *OrderDetailReq) String() string {
+func (p *TripPublishReq) GetStartPoint() (v string) {
+	return p.StartPoint
+}
+
+func (p *TripPublishReq) GetEndPoint() (v string) {
+	return p.EndPoint
+}
+
+func (p *TripPublishReq) GetDepartureTime() (v string) {
+	return p.DepartureTime
+}
+
+var TripPublishReq_SpecialNeeds_DEFAULT string
+
+func (p *TripPublishReq) GetSpecialNeeds() (v string) {
+	if !p.IsSetSpecialNeeds() {
+		return TripPublishReq_SpecialNeeds_DEFAULT
+	}
+	return *p.SpecialNeeds
+}
+
+var TripPublishReq_ContactWay_DEFAULT string
+
+func (p *TripPublishReq) GetContactWay() (v string) {
+	if !p.IsSetContactWay() {
+		return TripPublishReq_ContactWay_DEFAULT
+	}
+	return *p.ContactWay
+}
+func (p *TripPublishReq) SetPassengerId(val int64) {
+	p.PassengerId = val
+}
+func (p *TripPublishReq) SetStartPoint(val string) {
+	p.StartPoint = val
+}
+func (p *TripPublishReq) SetEndPoint(val string) {
+	p.EndPoint = val
+}
+func (p *TripPublishReq) SetDepartureTime(val string) {
+	p.DepartureTime = val
+}
+func (p *TripPublishReq) SetSpecialNeeds(val *string) {
+	p.SpecialNeeds = val
+}
+func (p *TripPublishReq) SetContactWay(val *string) {
+	p.ContactWay = val
+}
+
+func (p *TripPublishReq) IsSetSpecialNeeds() bool {
+	return p.SpecialNeeds != nil
+}
+
+func (p *TripPublishReq) IsSetContactWay() bool {
+	return p.ContactWay != nil
+}
+
+func (p *TripPublishReq) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("OrderDetailReq(%+v)", *p)
+	return fmt.Sprintf("TripPublishReq(%+v)", *p)
 }
 
-var fieldIDToName_OrderDetailReq = map[int16]string{
-	1: "id",
+var fieldIDToName_TripPublishReq = map[int16]string{
+	1: "passengerId",
+	2: "startPoint",
+	3: "endPoint",
+	4: "departureTime",
+	5: "specialNeeds",
+	6: "contactWay",
 }
 
-type OrderDetailResp struct {
-	Name         string `thrift:"name,1" frugal:"1,default,string" json:"name"`
-	Tel          string `thrift:"tel,2" frugal:"2,default,string" json:"tel"`
-	IDCard       string `thrift:"IDCard,3" frugal:"3,default,string" json:"IDCard"`
-	License      string `thrift:"license,4" frugal:"4,default,string" json:"license"`
-	RegisterDate string `thrift:"registerDate,5" frugal:"5,default,string" json:"registerDate"`
-	Rating       string `thrift:"rating,6" frugal:"6,default,string" json:"rating"`
+type TripPublishResp struct {
+	TripId  int64  `thrift:"tripId,1" frugal:"1,default,i64" json:"tripId"`
+	Message string `thrift:"message,2" frugal:"2,default,string" json:"message"`
+	Success bool   `thrift:"success,3" frugal:"3,default,bool" json:"success"`
 }
 
-func NewOrderDetailResp() *OrderDetailResp {
-	return &OrderDetailResp{}
+func NewTripPublishResp() *TripPublishResp {
+	return &TripPublishResp{}
 }
 
-func (p *OrderDetailResp) InitDefault() {
+func (p *TripPublishResp) InitDefault() {
 }
 
-func (p *OrderDetailResp) GetName() (v string) {
-	return p.Name
+func (p *TripPublishResp) GetTripId() (v int64) {
+	return p.TripId
 }
 
-func (p *OrderDetailResp) GetTel() (v string) {
-	return p.Tel
+func (p *TripPublishResp) GetMessage() (v string) {
+	return p.Message
 }
 
-func (p *OrderDetailResp) GetIDCard() (v string) {
-	return p.IDCard
+func (p *TripPublishResp) GetSuccess() (v bool) {
+	return p.Success
+}
+func (p *TripPublishResp) SetTripId(val int64) {
+	p.TripId = val
+}
+func (p *TripPublishResp) SetMessage(val string) {
+	p.Message = val
+}
+func (p *TripPublishResp) SetSuccess(val bool) {
+	p.Success = val
 }
 
-func (p *OrderDetailResp) GetLicense() (v string) {
-	return p.License
-}
-
-func (p *OrderDetailResp) GetRegisterDate() (v string) {
-	return p.RegisterDate
-}
-
-func (p *OrderDetailResp) GetRating() (v string) {
-	return p.Rating
-}
-func (p *OrderDetailResp) SetName(val string) {
-	p.Name = val
-}
-func (p *OrderDetailResp) SetTel(val string) {
-	p.Tel = val
-}
-func (p *OrderDetailResp) SetIDCard(val string) {
-	p.IDCard = val
-}
-func (p *OrderDetailResp) SetLicense(val string) {
-	p.License = val
-}
-func (p *OrderDetailResp) SetRegisterDate(val string) {
-	p.RegisterDate = val
-}
-func (p *OrderDetailResp) SetRating(val string) {
-	p.Rating = val
-}
-
-func (p *OrderDetailResp) String() string {
+func (p *TripPublishResp) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("OrderDetailResp(%+v)", *p)
+	return fmt.Sprintf("TripPublishResp(%+v)", *p)
 }
 
-var fieldIDToName_OrderDetailResp = map[int16]string{
-	1: "name",
-	2: "tel",
-	3: "IDCard",
-	4: "license",
-	5: "registerDate",
-	6: "rating",
+var fieldIDToName_TripPublishResp = map[int16]string{
+	1: "tripId",
+	2: "message",
+	3: "success",
+}
+
+type DriverTripPublishReq struct {
+	DriverId      int64  `thrift:"driverId,1" frugal:"1,default,i64" json:"driverId"`
+	StartPoint    string `thrift:"startPoint,2" frugal:"2,default,string" json:"startPoint"`
+	EndPoint      string `thrift:"endPoint,3" frugal:"3,default,string" json:"endPoint"`
+	DepartureTime string `thrift:"departureTime,4" frugal:"4,default,string" json:"departureTime"`
+	VehicleInfo   string `thrift:"vehicleInfo,5" frugal:"5,default,string" json:"vehicleInfo"`
+}
+
+func NewDriverTripPublishReq() *DriverTripPublishReq {
+	return &DriverTripPublishReq{}
+}
+
+func (p *DriverTripPublishReq) InitDefault() {
+}
+
+func (p *DriverTripPublishReq) GetDriverId() (v int64) {
+	return p.DriverId
+}
+
+func (p *DriverTripPublishReq) GetStartPoint() (v string) {
+	return p.StartPoint
+}
+
+func (p *DriverTripPublishReq) GetEndPoint() (v string) {
+	return p.EndPoint
+}
+
+func (p *DriverTripPublishReq) GetDepartureTime() (v string) {
+	return p.DepartureTime
+}
+
+func (p *DriverTripPublishReq) GetVehicleInfo() (v string) {
+	return p.VehicleInfo
+}
+func (p *DriverTripPublishReq) SetDriverId(val int64) {
+	p.DriverId = val
+}
+func (p *DriverTripPublishReq) SetStartPoint(val string) {
+	p.StartPoint = val
+}
+func (p *DriverTripPublishReq) SetEndPoint(val string) {
+	p.EndPoint = val
+}
+func (p *DriverTripPublishReq) SetDepartureTime(val string) {
+	p.DepartureTime = val
+}
+func (p *DriverTripPublishReq) SetVehicleInfo(val string) {
+	p.VehicleInfo = val
+}
+
+func (p *DriverTripPublishReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DriverTripPublishReq(%+v)", *p)
+}
+
+var fieldIDToName_DriverTripPublishReq = map[int16]string{
+	1: "driverId",
+	2: "startPoint",
+	3: "endPoint",
+	4: "departureTime",
+	5: "vehicleInfo",
+}
+
+type DriverTripPublishResp struct {
+	TripId  int64  `thrift:"tripId,1" frugal:"1,default,i64" json:"tripId"`
+	Message string `thrift:"message,2" frugal:"2,default,string" json:"message"`
+	Success bool   `thrift:"success,3" frugal:"3,default,bool" json:"success"`
+}
+
+func NewDriverTripPublishResp() *DriverTripPublishResp {
+	return &DriverTripPublishResp{}
+}
+
+func (p *DriverTripPublishResp) InitDefault() {
+}
+
+func (p *DriverTripPublishResp) GetTripId() (v int64) {
+	return p.TripId
+}
+
+func (p *DriverTripPublishResp) GetMessage() (v string) {
+	return p.Message
+}
+
+func (p *DriverTripPublishResp) GetSuccess() (v bool) {
+	return p.Success
+}
+func (p *DriverTripPublishResp) SetTripId(val int64) {
+	p.TripId = val
+}
+func (p *DriverTripPublishResp) SetMessage(val string) {
+	p.Message = val
+}
+func (p *DriverTripPublishResp) SetSuccess(val bool) {
+	p.Success = val
+}
+
+func (p *DriverTripPublishResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DriverTripPublishResp(%+v)", *p)
+}
+
+var fieldIDToName_DriverTripPublishResp = map[int16]string{
+	1: "tripId",
+	2: "message",
+	3: "success",
+}
+
+type TripQueryReq struct {
+	StartPoint    string  `thrift:"startPoint,1" frugal:"1,default,string" json:"startPoint"`
+	EndPoint      string  `thrift:"endPoint,2" frugal:"2,default,string" json:"endPoint"`
+	DepartureTime string  `thrift:"departureTime,3" frugal:"3,default,string" json:"departureTime"`
+	TripType      *string `thrift:"tripType,4,optional" frugal:"4,optional,string" json:"tripType,omitempty"`
+}
+
+func NewTripQueryReq() *TripQueryReq {
+	return &TripQueryReq{}
+}
+
+func (p *TripQueryReq) InitDefault() {
+}
+
+func (p *TripQueryReq) GetStartPoint() (v string) {
+	return p.StartPoint
+}
+
+func (p *TripQueryReq) GetEndPoint() (v string) {
+	return p.EndPoint
+}
+
+func (p *TripQueryReq) GetDepartureTime() (v string) {
+	return p.DepartureTime
+}
+
+var TripQueryReq_TripType_DEFAULT string
+
+func (p *TripQueryReq) GetTripType() (v string) {
+	if !p.IsSetTripType() {
+		return TripQueryReq_TripType_DEFAULT
+	}
+	return *p.TripType
+}
+func (p *TripQueryReq) SetStartPoint(val string) {
+	p.StartPoint = val
+}
+func (p *TripQueryReq) SetEndPoint(val string) {
+	p.EndPoint = val
+}
+func (p *TripQueryReq) SetDepartureTime(val string) {
+	p.DepartureTime = val
+}
+func (p *TripQueryReq) SetTripType(val *string) {
+	p.TripType = val
+}
+
+func (p *TripQueryReq) IsSetTripType() bool {
+	return p.TripType != nil
+}
+
+func (p *TripQueryReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("TripQueryReq(%+v)", *p)
+}
+
+var fieldIDToName_TripQueryReq = map[int16]string{
+	1: "startPoint",
+	2: "endPoint",
+	3: "departureTime",
+	4: "tripType",
+}
+
+type TripInfo struct {
+	TripId        int64   `thrift:"tripId,1" frugal:"1,default,i64" json:"tripId"`
+	StartPoint    string  `thrift:"startPoint,2" frugal:"2,default,string" json:"startPoint"`
+	EndPoint      string  `thrift:"endPoint,3" frugal:"3,default,string" json:"endPoint"`
+	DepartureTime string  `thrift:"departureTime,4" frugal:"4,default,string" json:"departureTime"`
+	TripType      string  `thrift:"tripType,5" frugal:"5,default,string" json:"tripType"`
+	PublisherName string  `thrift:"publisherName,6" frugal:"6,default,string" json:"publisherName"`
+	VehicleInfo   *string `thrift:"vehicleInfo,7,optional" frugal:"7,optional,string" json:"vehicleInfo,omitempty"`
+	SpecialNeeds  *string `thrift:"specialNeeds,8,optional" frugal:"8,optional,string" json:"specialNeeds,omitempty"`
+	Status        string  `thrift:"status,9" frugal:"9,default,string" json:"status"`
+}
+
+func NewTripInfo() *TripInfo {
+	return &TripInfo{}
+}
+
+func (p *TripInfo) InitDefault() {
+}
+
+func (p *TripInfo) GetTripId() (v int64) {
+	return p.TripId
+}
+
+func (p *TripInfo) GetStartPoint() (v string) {
+	return p.StartPoint
+}
+
+func (p *TripInfo) GetEndPoint() (v string) {
+	return p.EndPoint
+}
+
+func (p *TripInfo) GetDepartureTime() (v string) {
+	return p.DepartureTime
+}
+
+func (p *TripInfo) GetTripType() (v string) {
+	return p.TripType
+}
+
+func (p *TripInfo) GetPublisherName() (v string) {
+	return p.PublisherName
+}
+
+var TripInfo_VehicleInfo_DEFAULT string
+
+func (p *TripInfo) GetVehicleInfo() (v string) {
+	if !p.IsSetVehicleInfo() {
+		return TripInfo_VehicleInfo_DEFAULT
+	}
+	return *p.VehicleInfo
+}
+
+var TripInfo_SpecialNeeds_DEFAULT string
+
+func (p *TripInfo) GetSpecialNeeds() (v string) {
+	if !p.IsSetSpecialNeeds() {
+		return TripInfo_SpecialNeeds_DEFAULT
+	}
+	return *p.SpecialNeeds
+}
+
+func (p *TripInfo) GetStatus() (v string) {
+	return p.Status
+}
+func (p *TripInfo) SetTripId(val int64) {
+	p.TripId = val
+}
+func (p *TripInfo) SetStartPoint(val string) {
+	p.StartPoint = val
+}
+func (p *TripInfo) SetEndPoint(val string) {
+	p.EndPoint = val
+}
+func (p *TripInfo) SetDepartureTime(val string) {
+	p.DepartureTime = val
+}
+func (p *TripInfo) SetTripType(val string) {
+	p.TripType = val
+}
+func (p *TripInfo) SetPublisherName(val string) {
+	p.PublisherName = val
+}
+func (p *TripInfo) SetVehicleInfo(val *string) {
+	p.VehicleInfo = val
+}
+func (p *TripInfo) SetSpecialNeeds(val *string) {
+	p.SpecialNeeds = val
+}
+func (p *TripInfo) SetStatus(val string) {
+	p.Status = val
+}
+
+func (p *TripInfo) IsSetVehicleInfo() bool {
+	return p.VehicleInfo != nil
+}
+
+func (p *TripInfo) IsSetSpecialNeeds() bool {
+	return p.SpecialNeeds != nil
+}
+
+func (p *TripInfo) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("TripInfo(%+v)", *p)
+}
+
+var fieldIDToName_TripInfo = map[int16]string{
+	1: "tripId",
+	2: "startPoint",
+	3: "endPoint",
+	4: "departureTime",
+	5: "tripType",
+	6: "publisherName",
+	7: "vehicleInfo",
+	8: "specialNeeds",
+	9: "status",
+}
+
+type TripQueryResp struct {
+	Trips   []*TripInfo `thrift:"trips,1" frugal:"1,default,list<TripInfo>" json:"trips"`
+	Message string      `thrift:"message,2" frugal:"2,default,string" json:"message"`
+	Success bool        `thrift:"success,3" frugal:"3,default,bool" json:"success"`
+}
+
+func NewTripQueryResp() *TripQueryResp {
+	return &TripQueryResp{}
+}
+
+func (p *TripQueryResp) InitDefault() {
+}
+
+func (p *TripQueryResp) GetTrips() (v []*TripInfo) {
+	return p.Trips
+}
+
+func (p *TripQueryResp) GetMessage() (v string) {
+	return p.Message
+}
+
+func (p *TripQueryResp) GetSuccess() (v bool) {
+	return p.Success
+}
+func (p *TripQueryResp) SetTrips(val []*TripInfo) {
+	p.Trips = val
+}
+func (p *TripQueryResp) SetMessage(val string) {
+	p.Message = val
+}
+func (p *TripQueryResp) SetSuccess(val bool) {
+	p.Success = val
+}
+
+func (p *TripQueryResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("TripQueryResp(%+v)", *p)
+}
+
+var fieldIDToName_TripQueryResp = map[int16]string{
+	1: "trips",
+	2: "message",
+	3: "success",
+}
+
+type PassengerHelpReq struct {
+	TripId      int64  `thrift:"tripId,1" frugal:"1,default,i64" json:"tripId"`
+	PassengerId int64  `thrift:"passengerId,2" frugal:"2,default,i64" json:"passengerId"`
+	HelpType    string `thrift:"helpType,3" frugal:"3,default,string" json:"helpType"`
+}
+
+func NewPassengerHelpReq() *PassengerHelpReq {
+	return &PassengerHelpReq{}
+}
+
+func (p *PassengerHelpReq) InitDefault() {
+}
+
+func (p *PassengerHelpReq) GetTripId() (v int64) {
+	return p.TripId
+}
+
+func (p *PassengerHelpReq) GetPassengerId() (v int64) {
+	return p.PassengerId
+}
+
+func (p *PassengerHelpReq) GetHelpType() (v string) {
+	return p.HelpType
+}
+func (p *PassengerHelpReq) SetTripId(val int64) {
+	p.TripId = val
+}
+func (p *PassengerHelpReq) SetPassengerId(val int64) {
+	p.PassengerId = val
+}
+func (p *PassengerHelpReq) SetHelpType(val string) {
+	p.HelpType = val
+}
+
+func (p *PassengerHelpReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("PassengerHelpReq(%+v)", *p)
+}
+
+var fieldIDToName_PassengerHelpReq = map[int16]string{
+	1: "tripId",
+	2: "passengerId",
+	3: "helpType",
+}
+
+type PassengerHelpResp struct {
+	ContactInfo string `thrift:"contactInfo,1" frugal:"1,default,string" json:"contactInfo"`
+	Message     string `thrift:"message,2" frugal:"2,default,string" json:"message"`
+	Success     bool   `thrift:"success,3" frugal:"3,default,bool" json:"success"`
+}
+
+func NewPassengerHelpResp() *PassengerHelpResp {
+	return &PassengerHelpResp{}
+}
+
+func (p *PassengerHelpResp) InitDefault() {
+}
+
+func (p *PassengerHelpResp) GetContactInfo() (v string) {
+	return p.ContactInfo
+}
+
+func (p *PassengerHelpResp) GetMessage() (v string) {
+	return p.Message
+}
+
+func (p *PassengerHelpResp) GetSuccess() (v bool) {
+	return p.Success
+}
+func (p *PassengerHelpResp) SetContactInfo(val string) {
+	p.ContactInfo = val
+}
+func (p *PassengerHelpResp) SetMessage(val string) {
+	p.Message = val
+}
+func (p *PassengerHelpResp) SetSuccess(val bool) {
+	p.Success = val
+}
+
+func (p *PassengerHelpResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("PassengerHelpResp(%+v)", *p)
+}
+
+var fieldIDToName_PassengerHelpResp = map[int16]string{
+	1: "contactInfo",
+	2: "message",
+	3: "success",
+}
+
+type TripShareReq struct {
+	TripId       int64    `thrift:"tripId,1" frugal:"1,default,i64" json:"tripId"`
+	UserId       int64    `thrift:"userId,2" frugal:"2,default,i64" json:"userId"`
+	ShareTargets []string `thrift:"shareTargets,3" frugal:"3,default,list<string>" json:"shareTargets"`
+}
+
+func NewTripShareReq() *TripShareReq {
+	return &TripShareReq{}
+}
+
+func (p *TripShareReq) InitDefault() {
+}
+
+func (p *TripShareReq) GetTripId() (v int64) {
+	return p.TripId
+}
+
+func (p *TripShareReq) GetUserId() (v int64) {
+	return p.UserId
+}
+
+func (p *TripShareReq) GetShareTargets() (v []string) {
+	return p.ShareTargets
+}
+func (p *TripShareReq) SetTripId(val int64) {
+	p.TripId = val
+}
+func (p *TripShareReq) SetUserId(val int64) {
+	p.UserId = val
+}
+func (p *TripShareReq) SetShareTargets(val []string) {
+	p.ShareTargets = val
+}
+
+func (p *TripShareReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("TripShareReq(%+v)", *p)
+}
+
+var fieldIDToName_TripShareReq = map[int16]string{
+	1: "tripId",
+	2: "userId",
+	3: "shareTargets",
+}
+
+type TripShareResp struct {
+	ShareLink string `thrift:"shareLink,1" frugal:"1,default,string" json:"shareLink"`
+	Message   string `thrift:"message,2" frugal:"2,default,string" json:"message"`
+	Success   bool   `thrift:"success,3" frugal:"3,default,bool" json:"success"`
+}
+
+func NewTripShareResp() *TripShareResp {
+	return &TripShareResp{}
+}
+
+func (p *TripShareResp) InitDefault() {
+}
+
+func (p *TripShareResp) GetShareLink() (v string) {
+	return p.ShareLink
+}
+
+func (p *TripShareResp) GetMessage() (v string) {
+	return p.Message
+}
+
+func (p *TripShareResp) GetSuccess() (v bool) {
+	return p.Success
+}
+func (p *TripShareResp) SetShareLink(val string) {
+	p.ShareLink = val
+}
+func (p *TripShareResp) SetMessage(val string) {
+	p.Message = val
+}
+func (p *TripShareResp) SetSuccess(val bool) {
+	p.Success = val
+}
+
+func (p *TripShareResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("TripShareResp(%+v)", *p)
+}
+
+var fieldIDToName_TripShareResp = map[int16]string{
+	1: "shareLink",
+	2: "message",
+	3: "success",
+}
+
+type TripDetailReq struct {
+	TripId int64 `thrift:"tripId,1" frugal:"1,default,i64" json:"tripId"`
+}
+
+func NewTripDetailReq() *TripDetailReq {
+	return &TripDetailReq{}
+}
+
+func (p *TripDetailReq) InitDefault() {
+}
+
+func (p *TripDetailReq) GetTripId() (v int64) {
+	return p.TripId
+}
+func (p *TripDetailReq) SetTripId(val int64) {
+	p.TripId = val
+}
+
+func (p *TripDetailReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("TripDetailReq(%+v)", *p)
+}
+
+var fieldIDToName_TripDetailReq = map[int16]string{
+	1: "tripId",
+}
+
+type TripDetailResp struct {
+	TripInfo *TripInfo `thrift:"tripInfo,1" frugal:"1,default,TripInfo" json:"tripInfo"`
+	Message  string    `thrift:"message,2" frugal:"2,default,string" json:"message"`
+	Success  bool      `thrift:"success,3" frugal:"3,default,bool" json:"success"`
+}
+
+func NewTripDetailResp() *TripDetailResp {
+	return &TripDetailResp{}
+}
+
+func (p *TripDetailResp) InitDefault() {
+}
+
+var TripDetailResp_TripInfo_DEFAULT *TripInfo
+
+func (p *TripDetailResp) GetTripInfo() (v *TripInfo) {
+	if !p.IsSetTripInfo() {
+		return TripDetailResp_TripInfo_DEFAULT
+	}
+	return p.TripInfo
+}
+
+func (p *TripDetailResp) GetMessage() (v string) {
+	return p.Message
+}
+
+func (p *TripDetailResp) GetSuccess() (v bool) {
+	return p.Success
+}
+func (p *TripDetailResp) SetTripInfo(val *TripInfo) {
+	p.TripInfo = val
+}
+func (p *TripDetailResp) SetMessage(val string) {
+	p.Message = val
+}
+func (p *TripDetailResp) SetSuccess(val bool) {
+	p.Success = val
+}
+
+func (p *TripDetailResp) IsSetTripInfo() bool {
+	return p.TripInfo != nil
+}
+
+func (p *TripDetailResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("TripDetailResp(%+v)", *p)
+}
+
+var fieldIDToName_TripDetailResp = map[int16]string{
+	1: "tripInfo",
+	2: "message",
+	3: "success",
+}
+
+type DataExportReq struct {
+	UserId       int64    `thrift:"userId,1" frugal:"1,default,i64" json:"userId"`
+	UserType     string   `thrift:"userType,2" frugal:"2,default,string" json:"userType"`
+	ExportFields []string `thrift:"exportFields,3" frugal:"3,default,list<string>" json:"exportFields"`
+	StartDate    *string  `thrift:"startDate,4,optional" frugal:"4,optional,string" json:"startDate,omitempty"`
+	EndDate      *string  `thrift:"endDate,5,optional" frugal:"5,optional,string" json:"endDate,omitempty"`
+}
+
+func NewDataExportReq() *DataExportReq {
+	return &DataExportReq{}
+}
+
+func (p *DataExportReq) InitDefault() {
+}
+
+func (p *DataExportReq) GetUserId() (v int64) {
+	return p.UserId
+}
+
+func (p *DataExportReq) GetUserType() (v string) {
+	return p.UserType
+}
+
+func (p *DataExportReq) GetExportFields() (v []string) {
+	return p.ExportFields
+}
+
+var DataExportReq_StartDate_DEFAULT string
+
+func (p *DataExportReq) GetStartDate() (v string) {
+	if !p.IsSetStartDate() {
+		return DataExportReq_StartDate_DEFAULT
+	}
+	return *p.StartDate
+}
+
+var DataExportReq_EndDate_DEFAULT string
+
+func (p *DataExportReq) GetEndDate() (v string) {
+	if !p.IsSetEndDate() {
+		return DataExportReq_EndDate_DEFAULT
+	}
+	return *p.EndDate
+}
+func (p *DataExportReq) SetUserId(val int64) {
+	p.UserId = val
+}
+func (p *DataExportReq) SetUserType(val string) {
+	p.UserType = val
+}
+func (p *DataExportReq) SetExportFields(val []string) {
+	p.ExportFields = val
+}
+func (p *DataExportReq) SetStartDate(val *string) {
+	p.StartDate = val
+}
+func (p *DataExportReq) SetEndDate(val *string) {
+	p.EndDate = val
+}
+
+func (p *DataExportReq) IsSetStartDate() bool {
+	return p.StartDate != nil
+}
+
+func (p *DataExportReq) IsSetEndDate() bool {
+	return p.EndDate != nil
+}
+
+func (p *DataExportReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DataExportReq(%+v)", *p)
+}
+
+var fieldIDToName_DataExportReq = map[int16]string{
+	1: "userId",
+	2: "userType",
+	3: "exportFields",
+	4: "startDate",
+	5: "endDate",
+}
+
+type DataExportResp struct {
+	DownloadUrl string `thrift:"downloadUrl,1" frugal:"1,default,string" json:"downloadUrl"`
+	FileFormat  string `thrift:"fileFormat,2" frugal:"2,default,string" json:"fileFormat"`
+	ExportId    int64  `thrift:"exportId,3" frugal:"3,default,i64" json:"exportId"`
+	Message     string `thrift:"message,4" frugal:"4,default,string" json:"message"`
+	Success     bool   `thrift:"success,5" frugal:"5,default,bool" json:"success"`
+}
+
+func NewDataExportResp() *DataExportResp {
+	return &DataExportResp{}
+}
+
+func (p *DataExportResp) InitDefault() {
+}
+
+func (p *DataExportResp) GetDownloadUrl() (v string) {
+	return p.DownloadUrl
+}
+
+func (p *DataExportResp) GetFileFormat() (v string) {
+	return p.FileFormat
+}
+
+func (p *DataExportResp) GetExportId() (v int64) {
+	return p.ExportId
+}
+
+func (p *DataExportResp) GetMessage() (v string) {
+	return p.Message
+}
+
+func (p *DataExportResp) GetSuccess() (v bool) {
+	return p.Success
+}
+func (p *DataExportResp) SetDownloadUrl(val string) {
+	p.DownloadUrl = val
+}
+func (p *DataExportResp) SetFileFormat(val string) {
+	p.FileFormat = val
+}
+func (p *DataExportResp) SetExportId(val int64) {
+	p.ExportId = val
+}
+func (p *DataExportResp) SetMessage(val string) {
+	p.Message = val
+}
+func (p *DataExportResp) SetSuccess(val bool) {
+	p.Success = val
+}
+
+func (p *DataExportResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DataExportResp(%+v)", *p)
+}
+
+var fieldIDToName_DataExportResp = map[int16]string{
+	1: "downloadUrl",
+	2: "fileFormat",
+	3: "exportId",
+	4: "message",
+	5: "success",
+}
+
+type ExportRecordQueryReq struct {
+	UserId int64  `thrift:"userId,1" frugal:"1,default,i64" json:"userId"`
+	Limit  *int32 `thrift:"limit,2,optional" frugal:"2,optional,i32" json:"limit,omitempty"`
+}
+
+func NewExportRecordQueryReq() *ExportRecordQueryReq {
+	return &ExportRecordQueryReq{}
+}
+
+func (p *ExportRecordQueryReq) InitDefault() {
+}
+
+func (p *ExportRecordQueryReq) GetUserId() (v int64) {
+	return p.UserId
+}
+
+var ExportRecordQueryReq_Limit_DEFAULT int32
+
+func (p *ExportRecordQueryReq) GetLimit() (v int32) {
+	if !p.IsSetLimit() {
+		return ExportRecordQueryReq_Limit_DEFAULT
+	}
+	return *p.Limit
+}
+func (p *ExportRecordQueryReq) SetUserId(val int64) {
+	p.UserId = val
+}
+func (p *ExportRecordQueryReq) SetLimit(val *int32) {
+	p.Limit = val
+}
+
+func (p *ExportRecordQueryReq) IsSetLimit() bool {
+	return p.Limit != nil
+}
+
+func (p *ExportRecordQueryReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ExportRecordQueryReq(%+v)", *p)
+}
+
+var fieldIDToName_ExportRecordQueryReq = map[int16]string{
+	1: "userId",
+	2: "limit",
+}
+
+type ExportRecordInfo struct {
+	ExportId     int64  `thrift:"exportId,1" frugal:"1,default,i64" json:"exportId"`
+	UserId       int64  `thrift:"userId,2" frugal:"2,default,i64" json:"userId"`
+	UserType     string `thrift:"userType,3" frugal:"3,default,string" json:"userType"`
+	ExportFields string `thrift:"exportFields,4" frugal:"4,default,string" json:"exportFields"`
+	Status       string `thrift:"status,5" frugal:"5,default,string" json:"status"`
+	DownloadUrl  string `thrift:"downloadUrl,6" frugal:"6,default,string" json:"downloadUrl"`
+	CreatedAt    string `thrift:"createdAt,7" frugal:"7,default,string" json:"createdAt"`
+	ExpiresAt    string `thrift:"expiresAt,8" frugal:"8,default,string" json:"expiresAt"`
+}
+
+func NewExportRecordInfo() *ExportRecordInfo {
+	return &ExportRecordInfo{}
+}
+
+func (p *ExportRecordInfo) InitDefault() {
+}
+
+func (p *ExportRecordInfo) GetExportId() (v int64) {
+	return p.ExportId
+}
+
+func (p *ExportRecordInfo) GetUserId() (v int64) {
+	return p.UserId
+}
+
+func (p *ExportRecordInfo) GetUserType() (v string) {
+	return p.UserType
+}
+
+func (p *ExportRecordInfo) GetExportFields() (v string) {
+	return p.ExportFields
+}
+
+func (p *ExportRecordInfo) GetStatus() (v string) {
+	return p.Status
+}
+
+func (p *ExportRecordInfo) GetDownloadUrl() (v string) {
+	return p.DownloadUrl
+}
+
+func (p *ExportRecordInfo) GetCreatedAt() (v string) {
+	return p.CreatedAt
+}
+
+func (p *ExportRecordInfo) GetExpiresAt() (v string) {
+	return p.ExpiresAt
+}
+func (p *ExportRecordInfo) SetExportId(val int64) {
+	p.ExportId = val
+}
+func (p *ExportRecordInfo) SetUserId(val int64) {
+	p.UserId = val
+}
+func (p *ExportRecordInfo) SetUserType(val string) {
+	p.UserType = val
+}
+func (p *ExportRecordInfo) SetExportFields(val string) {
+	p.ExportFields = val
+}
+func (p *ExportRecordInfo) SetStatus(val string) {
+	p.Status = val
+}
+func (p *ExportRecordInfo) SetDownloadUrl(val string) {
+	p.DownloadUrl = val
+}
+func (p *ExportRecordInfo) SetCreatedAt(val string) {
+	p.CreatedAt = val
+}
+func (p *ExportRecordInfo) SetExpiresAt(val string) {
+	p.ExpiresAt = val
+}
+
+func (p *ExportRecordInfo) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ExportRecordInfo(%+v)", *p)
+}
+
+var fieldIDToName_ExportRecordInfo = map[int16]string{
+	1: "exportId",
+	2: "userId",
+	3: "userType",
+	4: "exportFields",
+	5: "status",
+	6: "downloadUrl",
+	7: "createdAt",
+	8: "expiresAt",
+}
+
+type ExportRecordQueryResp struct {
+	Records []*ExportRecordInfo `thrift:"records,1" frugal:"1,default,list<ExportRecordInfo>" json:"records"`
+	Message string              `thrift:"message,2" frugal:"2,default,string" json:"message"`
+	Success bool                `thrift:"success,3" frugal:"3,default,bool" json:"success"`
+}
+
+func NewExportRecordQueryResp() *ExportRecordQueryResp {
+	return &ExportRecordQueryResp{}
+}
+
+func (p *ExportRecordQueryResp) InitDefault() {
+}
+
+func (p *ExportRecordQueryResp) GetRecords() (v []*ExportRecordInfo) {
+	return p.Records
+}
+
+func (p *ExportRecordQueryResp) GetMessage() (v string) {
+	return p.Message
+}
+
+func (p *ExportRecordQueryResp) GetSuccess() (v bool) {
+	return p.Success
+}
+func (p *ExportRecordQueryResp) SetRecords(val []*ExportRecordInfo) {
+	p.Records = val
+}
+func (p *ExportRecordQueryResp) SetMessage(val string) {
+	p.Message = val
+}
+func (p *ExportRecordQueryResp) SetSuccess(val bool) {
+	p.Success = val
+}
+
+func (p *ExportRecordQueryResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ExportRecordQueryResp(%+v)", *p)
+}
+
+var fieldIDToName_ExportRecordQueryResp = map[int16]string{
+	1: "records",
+	2: "message",
+	3: "success",
 }
 
 type OrderService interface {
-	OrderDetail(ctx context.Context, req *OrderDetailReq) (r *OrderDetailResp, err error)
+	TripPublish(ctx context.Context, req *TripPublishReq) (r *TripPublishResp, err error)
+
+	DriverTripPublish(ctx context.Context, req *DriverTripPublishReq) (r *DriverTripPublishResp, err error)
+
+	TripQuery(ctx context.Context, req *TripQueryReq) (r *TripQueryResp, err error)
+
+	PassengerHelp(ctx context.Context, req *PassengerHelpReq) (r *PassengerHelpResp, err error)
+
+	TripShare(ctx context.Context, req *TripShareReq) (r *TripShareResp, err error)
+
+	TripDetail(ctx context.Context, req *TripDetailReq) (r *TripDetailResp, err error)
+
+	DataExport(ctx context.Context, req *DataExportReq) (r *DataExportResp, err error)
+
+	ExportRecordQuery(ctx context.Context, req *ExportRecordQueryReq) (r *ExportRecordQueryResp, err error)
 }
 
-type OrderServiceOrderDetailArgs struct {
-	Req *OrderDetailReq `thrift:"req,1" frugal:"1,default,OrderDetailReq" json:"req"`
+type OrderServiceTripPublishArgs struct {
+	Req *TripPublishReq `thrift:"req,1" frugal:"1,default,TripPublishReq" json:"req"`
 }
 
-func NewOrderServiceOrderDetailArgs() *OrderServiceOrderDetailArgs {
-	return &OrderServiceOrderDetailArgs{}
+func NewOrderServiceTripPublishArgs() *OrderServiceTripPublishArgs {
+	return &OrderServiceTripPublishArgs{}
 }
 
-func (p *OrderServiceOrderDetailArgs) InitDefault() {
+func (p *OrderServiceTripPublishArgs) InitDefault() {
 }
 
-var OrderServiceOrderDetailArgs_Req_DEFAULT *OrderDetailReq
+var OrderServiceTripPublishArgs_Req_DEFAULT *TripPublishReq
 
-func (p *OrderServiceOrderDetailArgs) GetReq() (v *OrderDetailReq) {
+func (p *OrderServiceTripPublishArgs) GetReq() (v *TripPublishReq) {
 	if !p.IsSetReq() {
-		return OrderServiceOrderDetailArgs_Req_DEFAULT
+		return OrderServiceTripPublishArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *OrderServiceOrderDetailArgs) SetReq(val *OrderDetailReq) {
+func (p *OrderServiceTripPublishArgs) SetReq(val *TripPublishReq) {
 	p.Req = val
 }
 
-func (p *OrderServiceOrderDetailArgs) IsSetReq() bool {
+func (p *OrderServiceTripPublishArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *OrderServiceOrderDetailArgs) String() string {
+func (p *OrderServiceTripPublishArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("OrderServiceOrderDetailArgs(%+v)", *p)
+	return fmt.Sprintf("OrderServiceTripPublishArgs(%+v)", *p)
 }
 
-var fieldIDToName_OrderServiceOrderDetailArgs = map[int16]string{
+var fieldIDToName_OrderServiceTripPublishArgs = map[int16]string{
 	1: "req",
 }
 
-type OrderServiceOrderDetailResult struct {
-	Success *OrderDetailResp `thrift:"success,0,optional" frugal:"0,optional,OrderDetailResp" json:"success,omitempty"`
+type OrderServiceTripPublishResult struct {
+	Success *TripPublishResp `thrift:"success,0,optional" frugal:"0,optional,TripPublishResp" json:"success,omitempty"`
 }
 
-func NewOrderServiceOrderDetailResult() *OrderServiceOrderDetailResult {
-	return &OrderServiceOrderDetailResult{}
+func NewOrderServiceTripPublishResult() *OrderServiceTripPublishResult {
+	return &OrderServiceTripPublishResult{}
 }
 
-func (p *OrderServiceOrderDetailResult) InitDefault() {
+func (p *OrderServiceTripPublishResult) InitDefault() {
 }
 
-var OrderServiceOrderDetailResult_Success_DEFAULT *OrderDetailResp
+var OrderServiceTripPublishResult_Success_DEFAULT *TripPublishResp
 
-func (p *OrderServiceOrderDetailResult) GetSuccess() (v *OrderDetailResp) {
+func (p *OrderServiceTripPublishResult) GetSuccess() (v *TripPublishResp) {
 	if !p.IsSetSuccess() {
-		return OrderServiceOrderDetailResult_Success_DEFAULT
+		return OrderServiceTripPublishResult_Success_DEFAULT
 	}
 	return p.Success
 }
-func (p *OrderServiceOrderDetailResult) SetSuccess(x interface{}) {
-	p.Success = x.(*OrderDetailResp)
+func (p *OrderServiceTripPublishResult) SetSuccess(x interface{}) {
+	p.Success = x.(*TripPublishResp)
 }
 
-func (p *OrderServiceOrderDetailResult) IsSetSuccess() bool {
+func (p *OrderServiceTripPublishResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *OrderServiceOrderDetailResult) String() string {
+func (p *OrderServiceTripPublishResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("OrderServiceOrderDetailResult(%+v)", *p)
+	return fmt.Sprintf("OrderServiceTripPublishResult(%+v)", *p)
 }
 
-var fieldIDToName_OrderServiceOrderDetailResult = map[int16]string{
+var fieldIDToName_OrderServiceTripPublishResult = map[int16]string{
+	0: "success",
+}
+
+type OrderServiceDriverTripPublishArgs struct {
+	Req *DriverTripPublishReq `thrift:"req,1" frugal:"1,default,DriverTripPublishReq" json:"req"`
+}
+
+func NewOrderServiceDriverTripPublishArgs() *OrderServiceDriverTripPublishArgs {
+	return &OrderServiceDriverTripPublishArgs{}
+}
+
+func (p *OrderServiceDriverTripPublishArgs) InitDefault() {
+}
+
+var OrderServiceDriverTripPublishArgs_Req_DEFAULT *DriverTripPublishReq
+
+func (p *OrderServiceDriverTripPublishArgs) GetReq() (v *DriverTripPublishReq) {
+	if !p.IsSetReq() {
+		return OrderServiceDriverTripPublishArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *OrderServiceDriverTripPublishArgs) SetReq(val *DriverTripPublishReq) {
+	p.Req = val
+}
+
+func (p *OrderServiceDriverTripPublishArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *OrderServiceDriverTripPublishArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OrderServiceDriverTripPublishArgs(%+v)", *p)
+}
+
+var fieldIDToName_OrderServiceDriverTripPublishArgs = map[int16]string{
+	1: "req",
+}
+
+type OrderServiceDriverTripPublishResult struct {
+	Success *DriverTripPublishResp `thrift:"success,0,optional" frugal:"0,optional,DriverTripPublishResp" json:"success,omitempty"`
+}
+
+func NewOrderServiceDriverTripPublishResult() *OrderServiceDriverTripPublishResult {
+	return &OrderServiceDriverTripPublishResult{}
+}
+
+func (p *OrderServiceDriverTripPublishResult) InitDefault() {
+}
+
+var OrderServiceDriverTripPublishResult_Success_DEFAULT *DriverTripPublishResp
+
+func (p *OrderServiceDriverTripPublishResult) GetSuccess() (v *DriverTripPublishResp) {
+	if !p.IsSetSuccess() {
+		return OrderServiceDriverTripPublishResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *OrderServiceDriverTripPublishResult) SetSuccess(x interface{}) {
+	p.Success = x.(*DriverTripPublishResp)
+}
+
+func (p *OrderServiceDriverTripPublishResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *OrderServiceDriverTripPublishResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OrderServiceDriverTripPublishResult(%+v)", *p)
+}
+
+var fieldIDToName_OrderServiceDriverTripPublishResult = map[int16]string{
+	0: "success",
+}
+
+type OrderServiceTripQueryArgs struct {
+	Req *TripQueryReq `thrift:"req,1" frugal:"1,default,TripQueryReq" json:"req"`
+}
+
+func NewOrderServiceTripQueryArgs() *OrderServiceTripQueryArgs {
+	return &OrderServiceTripQueryArgs{}
+}
+
+func (p *OrderServiceTripQueryArgs) InitDefault() {
+}
+
+var OrderServiceTripQueryArgs_Req_DEFAULT *TripQueryReq
+
+func (p *OrderServiceTripQueryArgs) GetReq() (v *TripQueryReq) {
+	if !p.IsSetReq() {
+		return OrderServiceTripQueryArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *OrderServiceTripQueryArgs) SetReq(val *TripQueryReq) {
+	p.Req = val
+}
+
+func (p *OrderServiceTripQueryArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *OrderServiceTripQueryArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OrderServiceTripQueryArgs(%+v)", *p)
+}
+
+var fieldIDToName_OrderServiceTripQueryArgs = map[int16]string{
+	1: "req",
+}
+
+type OrderServiceTripQueryResult struct {
+	Success *TripQueryResp `thrift:"success,0,optional" frugal:"0,optional,TripQueryResp" json:"success,omitempty"`
+}
+
+func NewOrderServiceTripQueryResult() *OrderServiceTripQueryResult {
+	return &OrderServiceTripQueryResult{}
+}
+
+func (p *OrderServiceTripQueryResult) InitDefault() {
+}
+
+var OrderServiceTripQueryResult_Success_DEFAULT *TripQueryResp
+
+func (p *OrderServiceTripQueryResult) GetSuccess() (v *TripQueryResp) {
+	if !p.IsSetSuccess() {
+		return OrderServiceTripQueryResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *OrderServiceTripQueryResult) SetSuccess(x interface{}) {
+	p.Success = x.(*TripQueryResp)
+}
+
+func (p *OrderServiceTripQueryResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *OrderServiceTripQueryResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OrderServiceTripQueryResult(%+v)", *p)
+}
+
+var fieldIDToName_OrderServiceTripQueryResult = map[int16]string{
+	0: "success",
+}
+
+type OrderServicePassengerHelpArgs struct {
+	Req *PassengerHelpReq `thrift:"req,1" frugal:"1,default,PassengerHelpReq" json:"req"`
+}
+
+func NewOrderServicePassengerHelpArgs() *OrderServicePassengerHelpArgs {
+	return &OrderServicePassengerHelpArgs{}
+}
+
+func (p *OrderServicePassengerHelpArgs) InitDefault() {
+}
+
+var OrderServicePassengerHelpArgs_Req_DEFAULT *PassengerHelpReq
+
+func (p *OrderServicePassengerHelpArgs) GetReq() (v *PassengerHelpReq) {
+	if !p.IsSetReq() {
+		return OrderServicePassengerHelpArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *OrderServicePassengerHelpArgs) SetReq(val *PassengerHelpReq) {
+	p.Req = val
+}
+
+func (p *OrderServicePassengerHelpArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *OrderServicePassengerHelpArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OrderServicePassengerHelpArgs(%+v)", *p)
+}
+
+var fieldIDToName_OrderServicePassengerHelpArgs = map[int16]string{
+	1: "req",
+}
+
+type OrderServicePassengerHelpResult struct {
+	Success *PassengerHelpResp `thrift:"success,0,optional" frugal:"0,optional,PassengerHelpResp" json:"success,omitempty"`
+}
+
+func NewOrderServicePassengerHelpResult() *OrderServicePassengerHelpResult {
+	return &OrderServicePassengerHelpResult{}
+}
+
+func (p *OrderServicePassengerHelpResult) InitDefault() {
+}
+
+var OrderServicePassengerHelpResult_Success_DEFAULT *PassengerHelpResp
+
+func (p *OrderServicePassengerHelpResult) GetSuccess() (v *PassengerHelpResp) {
+	if !p.IsSetSuccess() {
+		return OrderServicePassengerHelpResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *OrderServicePassengerHelpResult) SetSuccess(x interface{}) {
+	p.Success = x.(*PassengerHelpResp)
+}
+
+func (p *OrderServicePassengerHelpResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *OrderServicePassengerHelpResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OrderServicePassengerHelpResult(%+v)", *p)
+}
+
+var fieldIDToName_OrderServicePassengerHelpResult = map[int16]string{
+	0: "success",
+}
+
+type OrderServiceTripShareArgs struct {
+	Req *TripShareReq `thrift:"req,1" frugal:"1,default,TripShareReq" json:"req"`
+}
+
+func NewOrderServiceTripShareArgs() *OrderServiceTripShareArgs {
+	return &OrderServiceTripShareArgs{}
+}
+
+func (p *OrderServiceTripShareArgs) InitDefault() {
+}
+
+var OrderServiceTripShareArgs_Req_DEFAULT *TripShareReq
+
+func (p *OrderServiceTripShareArgs) GetReq() (v *TripShareReq) {
+	if !p.IsSetReq() {
+		return OrderServiceTripShareArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *OrderServiceTripShareArgs) SetReq(val *TripShareReq) {
+	p.Req = val
+}
+
+func (p *OrderServiceTripShareArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *OrderServiceTripShareArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OrderServiceTripShareArgs(%+v)", *p)
+}
+
+var fieldIDToName_OrderServiceTripShareArgs = map[int16]string{
+	1: "req",
+}
+
+type OrderServiceTripShareResult struct {
+	Success *TripShareResp `thrift:"success,0,optional" frugal:"0,optional,TripShareResp" json:"success,omitempty"`
+}
+
+func NewOrderServiceTripShareResult() *OrderServiceTripShareResult {
+	return &OrderServiceTripShareResult{}
+}
+
+func (p *OrderServiceTripShareResult) InitDefault() {
+}
+
+var OrderServiceTripShareResult_Success_DEFAULT *TripShareResp
+
+func (p *OrderServiceTripShareResult) GetSuccess() (v *TripShareResp) {
+	if !p.IsSetSuccess() {
+		return OrderServiceTripShareResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *OrderServiceTripShareResult) SetSuccess(x interface{}) {
+	p.Success = x.(*TripShareResp)
+}
+
+func (p *OrderServiceTripShareResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *OrderServiceTripShareResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OrderServiceTripShareResult(%+v)", *p)
+}
+
+var fieldIDToName_OrderServiceTripShareResult = map[int16]string{
+	0: "success",
+}
+
+type OrderServiceTripDetailArgs struct {
+	Req *TripDetailReq `thrift:"req,1" frugal:"1,default,TripDetailReq" json:"req"`
+}
+
+func NewOrderServiceTripDetailArgs() *OrderServiceTripDetailArgs {
+	return &OrderServiceTripDetailArgs{}
+}
+
+func (p *OrderServiceTripDetailArgs) InitDefault() {
+}
+
+var OrderServiceTripDetailArgs_Req_DEFAULT *TripDetailReq
+
+func (p *OrderServiceTripDetailArgs) GetReq() (v *TripDetailReq) {
+	if !p.IsSetReq() {
+		return OrderServiceTripDetailArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *OrderServiceTripDetailArgs) SetReq(val *TripDetailReq) {
+	p.Req = val
+}
+
+func (p *OrderServiceTripDetailArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *OrderServiceTripDetailArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OrderServiceTripDetailArgs(%+v)", *p)
+}
+
+var fieldIDToName_OrderServiceTripDetailArgs = map[int16]string{
+	1: "req",
+}
+
+type OrderServiceTripDetailResult struct {
+	Success *TripDetailResp `thrift:"success,0,optional" frugal:"0,optional,TripDetailResp" json:"success,omitempty"`
+}
+
+func NewOrderServiceTripDetailResult() *OrderServiceTripDetailResult {
+	return &OrderServiceTripDetailResult{}
+}
+
+func (p *OrderServiceTripDetailResult) InitDefault() {
+}
+
+var OrderServiceTripDetailResult_Success_DEFAULT *TripDetailResp
+
+func (p *OrderServiceTripDetailResult) GetSuccess() (v *TripDetailResp) {
+	if !p.IsSetSuccess() {
+		return OrderServiceTripDetailResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *OrderServiceTripDetailResult) SetSuccess(x interface{}) {
+	p.Success = x.(*TripDetailResp)
+}
+
+func (p *OrderServiceTripDetailResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *OrderServiceTripDetailResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OrderServiceTripDetailResult(%+v)", *p)
+}
+
+var fieldIDToName_OrderServiceTripDetailResult = map[int16]string{
+	0: "success",
+}
+
+type OrderServiceDataExportArgs struct {
+	Req *DataExportReq `thrift:"req,1" frugal:"1,default,DataExportReq" json:"req"`
+}
+
+func NewOrderServiceDataExportArgs() *OrderServiceDataExportArgs {
+	return &OrderServiceDataExportArgs{}
+}
+
+func (p *OrderServiceDataExportArgs) InitDefault() {
+}
+
+var OrderServiceDataExportArgs_Req_DEFAULT *DataExportReq
+
+func (p *OrderServiceDataExportArgs) GetReq() (v *DataExportReq) {
+	if !p.IsSetReq() {
+		return OrderServiceDataExportArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *OrderServiceDataExportArgs) SetReq(val *DataExportReq) {
+	p.Req = val
+}
+
+func (p *OrderServiceDataExportArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *OrderServiceDataExportArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OrderServiceDataExportArgs(%+v)", *p)
+}
+
+var fieldIDToName_OrderServiceDataExportArgs = map[int16]string{
+	1: "req",
+}
+
+type OrderServiceDataExportResult struct {
+	Success *DataExportResp `thrift:"success,0,optional" frugal:"0,optional,DataExportResp" json:"success,omitempty"`
+}
+
+func NewOrderServiceDataExportResult() *OrderServiceDataExportResult {
+	return &OrderServiceDataExportResult{}
+}
+
+func (p *OrderServiceDataExportResult) InitDefault() {
+}
+
+var OrderServiceDataExportResult_Success_DEFAULT *DataExportResp
+
+func (p *OrderServiceDataExportResult) GetSuccess() (v *DataExportResp) {
+	if !p.IsSetSuccess() {
+		return OrderServiceDataExportResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *OrderServiceDataExportResult) SetSuccess(x interface{}) {
+	p.Success = x.(*DataExportResp)
+}
+
+func (p *OrderServiceDataExportResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *OrderServiceDataExportResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OrderServiceDataExportResult(%+v)", *p)
+}
+
+var fieldIDToName_OrderServiceDataExportResult = map[int16]string{
+	0: "success",
+}
+
+type OrderServiceExportRecordQueryArgs struct {
+	Req *ExportRecordQueryReq `thrift:"req,1" frugal:"1,default,ExportRecordQueryReq" json:"req"`
+}
+
+func NewOrderServiceExportRecordQueryArgs() *OrderServiceExportRecordQueryArgs {
+	return &OrderServiceExportRecordQueryArgs{}
+}
+
+func (p *OrderServiceExportRecordQueryArgs) InitDefault() {
+}
+
+var OrderServiceExportRecordQueryArgs_Req_DEFAULT *ExportRecordQueryReq
+
+func (p *OrderServiceExportRecordQueryArgs) GetReq() (v *ExportRecordQueryReq) {
+	if !p.IsSetReq() {
+		return OrderServiceExportRecordQueryArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *OrderServiceExportRecordQueryArgs) SetReq(val *ExportRecordQueryReq) {
+	p.Req = val
+}
+
+func (p *OrderServiceExportRecordQueryArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *OrderServiceExportRecordQueryArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OrderServiceExportRecordQueryArgs(%+v)", *p)
+}
+
+var fieldIDToName_OrderServiceExportRecordQueryArgs = map[int16]string{
+	1: "req",
+}
+
+type OrderServiceExportRecordQueryResult struct {
+	Success *ExportRecordQueryResp `thrift:"success,0,optional" frugal:"0,optional,ExportRecordQueryResp" json:"success,omitempty"`
+}
+
+func NewOrderServiceExportRecordQueryResult() *OrderServiceExportRecordQueryResult {
+	return &OrderServiceExportRecordQueryResult{}
+}
+
+func (p *OrderServiceExportRecordQueryResult) InitDefault() {
+}
+
+var OrderServiceExportRecordQueryResult_Success_DEFAULT *ExportRecordQueryResp
+
+func (p *OrderServiceExportRecordQueryResult) GetSuccess() (v *ExportRecordQueryResp) {
+	if !p.IsSetSuccess() {
+		return OrderServiceExportRecordQueryResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *OrderServiceExportRecordQueryResult) SetSuccess(x interface{}) {
+	p.Success = x.(*ExportRecordQueryResp)
+}
+
+func (p *OrderServiceExportRecordQueryResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *OrderServiceExportRecordQueryResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OrderServiceExportRecordQueryResult(%+v)", *p)
+}
+
+var fieldIDToName_OrderServiceExportRecordQueryResult = map[int16]string{
 	0: "success",
 }

@@ -1,1 +1,1 @@
-namespace go
+namespace go car.exmple

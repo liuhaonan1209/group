@@ -3,15 +3,19 @@
 package driverservice
 
 import (
-	driver "group/kitex_gen/car/driver"
 	"context"
 	client "github.com/cloudwego/kitex/client"
 	callopt "github.com/cloudwego/kitex/client/callopt"
+	driver0 "group/kitex_gen/car/driver"
 )
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
-	DriverDetail(ctx context.Context, req *driver.DriverDetailReq, callOptions ...callopt.Option) (r *driver.DriverDetailResp, err error)
+	DriverDetail(ctx context.Context, req *driver0.DriverDetailReq, callOptions ...callopt.Option) (r *driver0.DriverDetailResp, err error)
+	DriverRegister(ctx context.Context, req *driver0.DriverRegisterReq, callOptions ...callopt.Option) (r *driver0.DriverRegisterResp, err error)
+	DriverVerify(ctx context.Context, req *driver0.DriverVerifyReq, callOptions ...callopt.Option) (r *driver0.DriverVerifyResp, err error)
+	DriverConfigQuery(ctx context.Context, req *driver0.DriverConfigQueryReq, callOptions ...callopt.Option) (r *driver0.DriverConfigQueryResp, err error)
+	VehicleComplianceCheck(ctx context.Context, req *driver0.VehicleComplianceCheckReq, callOptions ...callopt.Option) (r *driver0.VehicleComplianceCheckResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -43,7 +47,27 @@ type kDriverServiceClient struct {
 	*kClient
 }
 
-func (p *kDriverServiceClient) DriverDetail(ctx context.Context, req *driver.DriverDetailReq, callOptions ...callopt.Option) (r *driver.DriverDetailResp, err error) {
+func (p *kDriverServiceClient) DriverDetail(ctx context.Context, req *driver0.DriverDetailReq, callOptions ...callopt.Option) (r *driver0.DriverDetailResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.DriverDetail(ctx, req)
+}
+
+func (p *kDriverServiceClient) DriverRegister(ctx context.Context, req *driver0.DriverRegisterReq, callOptions ...callopt.Option) (r *driver0.DriverRegisterResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DriverRegister(ctx, req)
+}
+
+func (p *kDriverServiceClient) DriverVerify(ctx context.Context, req *driver0.DriverVerifyReq, callOptions ...callopt.Option) (r *driver0.DriverVerifyResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DriverVerify(ctx, req)
+}
+
+func (p *kDriverServiceClient) DriverConfigQuery(ctx context.Context, req *driver0.DriverConfigQueryReq, callOptions ...callopt.Option) (r *driver0.DriverConfigQueryResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DriverConfigQuery(ctx, req)
+}
+
+func (p *kDriverServiceClient) VehicleComplianceCheck(ctx context.Context, req *driver0.VehicleComplianceCheckReq, callOptions ...callopt.Option) (r *driver0.VehicleComplianceCheckResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.VehicleComplianceCheck(ctx, req)
 }

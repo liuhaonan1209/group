@@ -3,15 +3,18 @@
 package passengerservice
 
 import (
-	passenger "group/kitex_gen/car/passenger"
 	"context"
 	client "github.com/cloudwego/kitex/client"
 	callopt "github.com/cloudwego/kitex/client/callopt"
+	passenger "group/kitex_gen/car/passenger"
 )
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
 	PassengerDetail(ctx context.Context, req *passenger.PassengerDetailReq, callOptions ...callopt.Option) (r *passenger.PassengerDetailResp, err error)
+	PassengerRegister(ctx context.Context, req *passenger.PassengerRegisterReq, callOptions ...callopt.Option) (r *passenger.PassengerRegisterResp, err error)
+	PassengerVerify(ctx context.Context, req *passenger.PassengerVerifyReq, callOptions ...callopt.Option) (r *passenger.PassengerVerifyResp, err error)
+	SendVerifyCode(ctx context.Context, req *passenger.SendVerifyCodeReq, callOptions ...callopt.Option) (r *passenger.SendVerifyCodeResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -46,4 +49,19 @@ type kPassengerServiceClient struct {
 func (p *kPassengerServiceClient) PassengerDetail(ctx context.Context, req *passenger.PassengerDetailReq, callOptions ...callopt.Option) (r *passenger.PassengerDetailResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.PassengerDetail(ctx, req)
+}
+
+func (p *kPassengerServiceClient) PassengerRegister(ctx context.Context, req *passenger.PassengerRegisterReq, callOptions ...callopt.Option) (r *passenger.PassengerRegisterResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.PassengerRegister(ctx, req)
+}
+
+func (p *kPassengerServiceClient) PassengerVerify(ctx context.Context, req *passenger.PassengerVerifyReq, callOptions ...callopt.Option) (r *passenger.PassengerVerifyResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.PassengerVerify(ctx, req)
+}
+
+func (p *kPassengerServiceClient) SendVerifyCode(ctx context.Context, req *passenger.SendVerifyCodeReq, callOptions ...callopt.Option) (r *passenger.SendVerifyCodeResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.SendVerifyCode(ctx, req)
 }

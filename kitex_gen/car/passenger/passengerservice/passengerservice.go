@@ -3,11 +3,11 @@
 package passengerservice
 
 import (
-	passenger "group/kitex_gen/car/passenger"
 	"context"
 	"errors"
 	client "github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
+	passenger "group/kitex_gen/car/passenger"
 )
 
 var errInvalidMessageType = errors.New("invalid message type for service method handler")
@@ -17,6 +17,27 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		passengerDetailHandler,
 		newPassengerServicePassengerDetailArgs,
 		newPassengerServicePassengerDetailResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"PassengerRegister": kitex.NewMethodInfo(
+		passengerRegisterHandler,
+		newPassengerServicePassengerRegisterArgs,
+		newPassengerServicePassengerRegisterResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"PassengerVerify": kitex.NewMethodInfo(
+		passengerVerifyHandler,
+		newPassengerServicePassengerVerifyArgs,
+		newPassengerServicePassengerVerifyResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"SendVerifyCode": kitex.NewMethodInfo(
+		sendVerifyCodeHandler,
+		newPassengerServiceSendVerifyCodeArgs,
+		newPassengerServiceSendVerifyCodeResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
@@ -104,6 +125,60 @@ func newPassengerServicePassengerDetailResult() interface{} {
 	return passenger.NewPassengerServicePassengerDetailResult()
 }
 
+func passengerRegisterHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*passenger.PassengerServicePassengerRegisterArgs)
+	realResult := result.(*passenger.PassengerServicePassengerRegisterResult)
+	success, err := handler.(passenger.PassengerService).PassengerRegister(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newPassengerServicePassengerRegisterArgs() interface{} {
+	return passenger.NewPassengerServicePassengerRegisterArgs()
+}
+
+func newPassengerServicePassengerRegisterResult() interface{} {
+	return passenger.NewPassengerServicePassengerRegisterResult()
+}
+
+func passengerVerifyHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*passenger.PassengerServicePassengerVerifyArgs)
+	realResult := result.(*passenger.PassengerServicePassengerVerifyResult)
+	success, err := handler.(passenger.PassengerService).PassengerVerify(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newPassengerServicePassengerVerifyArgs() interface{} {
+	return passenger.NewPassengerServicePassengerVerifyArgs()
+}
+
+func newPassengerServicePassengerVerifyResult() interface{} {
+	return passenger.NewPassengerServicePassengerVerifyResult()
+}
+
+func sendVerifyCodeHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*passenger.PassengerServiceSendVerifyCodeArgs)
+	realResult := result.(*passenger.PassengerServiceSendVerifyCodeResult)
+	success, err := handler.(passenger.PassengerService).SendVerifyCode(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newPassengerServiceSendVerifyCodeArgs() interface{} {
+	return passenger.NewPassengerServiceSendVerifyCodeArgs()
+}
+
+func newPassengerServiceSendVerifyCodeResult() interface{} {
+	return passenger.NewPassengerServiceSendVerifyCodeResult()
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -119,6 +194,36 @@ func (p *kClient) PassengerDetail(ctx context.Context, req *passenger.PassengerD
 	_args.Req = req
 	var _result passenger.PassengerServicePassengerDetailResult
 	if err = p.c.Call(ctx, "PassengerDetail", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) PassengerRegister(ctx context.Context, req *passenger.PassengerRegisterReq) (r *passenger.PassengerRegisterResp, err error) {
+	var _args passenger.PassengerServicePassengerRegisterArgs
+	_args.Req = req
+	var _result passenger.PassengerServicePassengerRegisterResult
+	if err = p.c.Call(ctx, "PassengerRegister", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) PassengerVerify(ctx context.Context, req *passenger.PassengerVerifyReq) (r *passenger.PassengerVerifyResp, err error) {
+	var _args passenger.PassengerServicePassengerVerifyArgs
+	_args.Req = req
+	var _result passenger.PassengerServicePassengerVerifyResult
+	if err = p.c.Call(ctx, "PassengerVerify", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) SendVerifyCode(ctx context.Context, req *passenger.SendVerifyCodeReq) (r *passenger.SendVerifyCodeResp, err error) {
+	var _args passenger.PassengerServiceSendVerifyCodeArgs
+	_args.Req = req
+	var _result passenger.PassengerServiceSendVerifyCodeResult
+	if err = p.c.Call(ctx, "SendVerifyCode", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
