@@ -1,0 +1,11 @@
+mysql:
+  user: "root"
+  password: "3934F866B57F972EC1BBDB4E8E0A998E"
+  host: "14.103.167.35"
+  port: 3306
+  database: "exam"
+
+redis:
+  password: "3934F866B57F972EC1BBDB4E8E0A998E"
+  host: "14.103.167.35"
+  port: 6379

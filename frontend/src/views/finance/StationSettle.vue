@@ -103,7 +103,9 @@ export default {
     const tableData = ref([])
 
     const formatMoney = (amount) => {
-      return Number(amount).toFixed(2)
+      if (amount === undefined || amount === null || amount === '') return '0.00'
+      const num = Number(amount)
+      return isNaN(num) ? '0.00' : num.toFixed(2)
     }
 
     const loadData = async () => {

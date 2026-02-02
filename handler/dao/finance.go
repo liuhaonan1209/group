@@ -12,10 +12,11 @@ import (
 // GetBalanceSheetList 获取收支对账列表
 func GetBalanceSheetList(startDate, endDate string, status, page, size int) (list []model.BalanceSheet, total int64, err error) {
 	db := global.DB.Model(&model.BalanceSheet{})
-
+	//对账日期
 	if startDate != "" {
 		db = db.Where("settle_date >= ?", startDate)
 	}
+
 	if endDate != "" {
 		db = db.Where("settle_date <= ?", endDate)
 	}

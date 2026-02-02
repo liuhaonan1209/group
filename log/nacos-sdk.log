@@ -1,0 +1,13 @@
+2026-01-28T16:05:09.346+0800	WARN	cache/disk_cache.go:193	read Config Content failed. cause file doesn't exist, file path: C:\Users\24815\Desktop\group\cache\config\document@@DEFAULT_GROUP@@_failover.
+2026-01-28T16:05:09.372+0800	INFO	rpc/rpc_client.go:157	init rpc client for name %!(EXTRA string=config-0-3f5fdd4a-e929-432c-9cee-3089f023647e)
+2026-01-28T16:05:09.374+0800	INFO	rpc/rpc_client.go:166	get app conn labels from client config map[] 
+2026-01-28T16:05:09.374+0800	INFO	rpc/rpc_client.go:168	get app conn labels from env map[] 
+2026-01-28T16:05:09.374+0800	INFO	rpc/rpc_client.go:171	final app conn labels : map[] 
+2026-01-28T16:05:09.377+0800	INFO	rpc/rpc_client.go:327	[RpcClient.Start] config-0-3f5fdd4a-e929-432c-9cee-3089f023647e try to connect to server on start up, server: {serverIp:14.103.167.35 serverPort:8848 serverGrpcPort:9848}
+2026-01-28T16:05:09.377+0800	INFO	rpc/grpc_client.go:175	check tls config %!(EXTRA *constant.TLSConfig=&{false false false    })
+2026-01-28T16:05:09.377+0800	INFO	rpc/grpc_client.go:180	try to get tls config from env
+2026-01-28T16:05:09.377+0800	INFO	rpc/grpc_client.go:189	 tls config from env is not enable
+2026-01-28T16:05:09.401+0800	INFO	util/common.go:96	Local IP:10.223.103.70
+2026-01-28T16:05:09.661+0800	INFO	rpc/rpc_client.go:337	config-0-3f5fdd4a-e929-432c-9cee-3089f023647e success to connect to server {serverIp:14.103.167.35 serverPort:8848 serverGrpcPort:9848} on start up, connectionId=1769587508778_49.93.149.108_24671
+2026-01-28T16:05:09.661+0800	INFO	rpc/rpc_client.go:487	config-0-3f5fdd4a-e929-432c-9cee-3089f023647e notify connected event to listeners , connectionId=1769587508778_49.93.149.108_24671
+2026-01-28T16:05:09.661+0800	INFO	config_client/config_connection_event_listener.go:38	[ConfigConnectionEventListener] connect to config server for taskId: 0

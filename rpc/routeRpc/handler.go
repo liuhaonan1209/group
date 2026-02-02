@@ -47,9 +47,9 @@ func (s *RouteServiceImpl) RouteCreate(ctx context.Context, req *route.RouteCrea
 		return resp, nil
 	}
 
-	// 创建班线
+	// 创建班线 封装班线主数据，插入数据库
 	routeModel := &model.Route{
-		RouteNo:        req.RouteNo,
+		RouteNo:        req.RouteNo, //车队编号
 		Fieet:          req.Fieet,
 		Tage:           req.Tage,
 		StartStationId: uint(req.StartStationId),
@@ -67,7 +67,7 @@ func (s *RouteServiceImpl) RouteCreate(ctx context.Context, req *route.RouteCrea
 	routeId := int(routeModel.ID)
 
 	// 处理上车站点
-	if len(req.UpStations) > 0 {
+	if len(req.UpStations) > 0 { // 如果请求中有上车站点数据
 		upStops, err := processStations(req.UpStations, routeId, model.StopTypePickup)
 		if err != nil {
 			resp.Success = false
@@ -82,7 +82,7 @@ func (s *RouteServiceImpl) RouteCreate(ctx context.Context, req *route.RouteCrea
 	}
 
 	// 处理下车站点
-	if len(req.DownStations) > 0 {
+	if len(req.DownStations) > 0 { // 如果请求中有下车站点数据
 		// 检查上下车站点冲突
 		if err := checkUpDownConflict(req.UpStations, req.DownStations); err != nil {
 			resp.Success = false
@@ -109,11 +109,11 @@ func (s *RouteServiceImpl) RouteCreate(ctx context.Context, req *route.RouteCrea
 	return
 }
 
-
 // RouteList 班线列表
 func (s *RouteServiceImpl) RouteList(ctx context.Context, req *route.RouteListReq) (resp *route.RouteListResp, err error) {
+	// 初始化响应对象
 	resp = &route.RouteListResp{}
-
+	//分页参数校验与默认值设置
 	page := int(req.Page)
 	size := int(req.Size)
 	if page <= 0 {
@@ -122,14 +122,14 @@ func (s *RouteServiceImpl) RouteList(ctx context.Context, req *route.RouteListRe
 	if size <= 0 {
 		size = 10
 	}
-
+	//. 调用 DAO 层，执行数据库分页 + 条件查询
 	list, total, err := dao.RouteList(page, size, req.RouteNo, req.Fieet, req.Tage)
 	if err != nil {
 		resp.Success = false
 		resp.Msg = "查询失败: " + err.Error()
 		return resp, nil
 	}
-
+	//数据格式转换：Model 层 → API 层
 	items := make([]*route.RouteItem, len(list))
 	for i, r := range list {
 		items[i] = &route.RouteItem{
@@ -217,7 +217,7 @@ func (s *RouteServiceImpl) RouteUpdate(ctx context.Context, req *route.RouteUpda
 	if req.IsActive {
 		isActive = "1"
 	}
-
+	//封装更新模型，执行班线基础信息更新
 	routeModel := &model.Route{
 		RouteNo:        req.RouteNo,
 		Fieet:          req.Fieet,
@@ -281,8 +281,8 @@ func (s *RouteServiceImpl) RouteDelete(ctx context.Context, req *route.RouteDele
 	}
 
 	// 删除关联的站点
-	dao.ClearRouteStops(int(req.Id), model.StopTypePickup)
-	dao.ClearRouteStops(int(req.Id), model.StopTypeDropoff)
+	dao.ClearRouteStops(int(req.Id), model.StopTypePickup)  //上车站点
+	dao.ClearRouteStops(int(req.Id), model.StopTypeDropoff) //下车站点
 
 	if err := dao.RouteDelete(req.Id); err != nil {
 		resp.Success = false
@@ -294,7 +294,6 @@ func (s *RouteServiceImpl) RouteDelete(ctx context.Context, req *route.RouteDele
 	resp.Msg = "删除成功"
 	return
 }
-
 
 // ========== 站点管理 ==========
 
@@ -467,7 +466,6 @@ func (s *RouteServiceImpl) ScheduleDelete(ctx context.Context, req *route.Schedu
 	resp.Msg = "删除成功"
 	return
 }
-
 
 // ========== 辅助函数 ==========
 

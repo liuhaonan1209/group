@@ -12,10 +12,10 @@ import (
 type FinanceServiceImpl struct{}
 
 // ========== 收支对账 ==========
-
+// 财务收支对账的分页查询接口
 func (s *FinanceServiceImpl) GetBalanceSheet(ctx context.Context, req *finance.BalanceSheetReq) (resp *finance.BalanceSheetResp, err error) {
 	resp = &finance.BalanceSheetResp{}
-
+	//分页参数容错处理
 	page, size := int(req.Page), int(req.Size)
 	if page <= 0 {
 		page = 1
@@ -23,14 +23,14 @@ func (s *FinanceServiceImpl) GetBalanceSheet(ctx context.Context, req *finance.B
 	if size <= 0 {
 		size = 10
 	}
-
+	//调用 DAO 层，执行带条件的分页对账明细查询
 	list, total, err := dao.GetBalanceSheetList(req.StartDate, req.EndDate, int(req.Status), page, size)
 	if err != nil {
 		resp.Success = false
 		resp.Msg = "查询失败: " + err.Error()
 		return resp, nil
 	}
-
+	//数据格式转换：Model 层 → API 层（财务专属格式处理）
 	items := make([]*finance.BalanceSheetItem, len(list))
 	for i, item := range list {
 		items[i] = &finance.BalanceSheetItem{
@@ -107,10 +107,10 @@ func (s *FinanceServiceImpl) GetIncomeSheet(ctx context.Context, req *finance.In
 }
 
 // ========== 线路结算 ==========
-
+// 财务模块的线路结算分页查询接口
 func (s *FinanceServiceImpl) GetRouteSettle(ctx context.Context, req *finance.RouteSettleReq) (resp *finance.RouteSettleResp, err error) {
 	resp = &finance.RouteSettleResp{}
-
+	// 分页参数容错处理
 	page, size := int(req.Page), int(req.Size)
 	if page <= 0 {
 		page = 1
@@ -118,14 +118,14 @@ func (s *FinanceServiceImpl) GetRouteSettle(ctx context.Context, req *finance.Ro
 	if size <= 0 {
 		size = 10
 	}
-
+	//执行线路维度的分页筛选查询
 	list, total, err := dao.GetRouteSettleList(req.StartDate, req.EndDate, req.RouteId, req.Fleet, page, size)
 	if err != nil {
 		resp.Success = false
 		resp.Msg = "查询失败: " + err.Error()
 		return resp, nil
 	}
-
+	//数据格式转换：Model 层 → API 层
 	items := make([]*finance.RouteSettleItem, len(list))
 	for i, item := range list {
 		items[i] = &finance.RouteSettleItem{
@@ -146,7 +146,7 @@ func (s *FinanceServiceImpl) GetRouteSettle(ctx context.Context, req *finance.Ro
 			UncheckedRefundTickets: int32(item.UncheckedRefundTickets),
 		}
 	}
-
+	//赋值成功响应，返回完整结果
 	resp.Success = true
 	resp.Msg = "查询成功"
 	resp.List = items
@@ -154,12 +154,11 @@ func (s *FinanceServiceImpl) GetRouteSettle(ctx context.Context, req *finance.Ro
 	return
 }
 
-
 // ========== 班次结算 ==========
 
 func (s *FinanceServiceImpl) GetScheduleSettle(ctx context.Context, req *finance.ScheduleSettleReq) (resp *finance.ScheduleSettleResp, err error) {
 	resp = &finance.ScheduleSettleResp{}
-
+	// 分页参数容错处理
 	page, size := int(req.Page), int(req.Size)
 	if page <= 0 {
 		page = 1
@@ -167,14 +166,14 @@ func (s *FinanceServiceImpl) GetScheduleSettle(ctx context.Context, req *finance
 	if size <= 0 {
 		size = 10
 	}
-
+	//执行线路维度的分页筛选查询
 	list, total, err := dao.GetScheduleSettleList(req.StartDate, req.EndDate, req.RouteId, req.ScheduleId, page, size)
 	if err != nil {
 		resp.Success = false
 		resp.Msg = "查询失败: " + err.Error()
 		return resp, nil
 	}
-
+	//数据格式转换：Model 层 → API 层
 	items := make([]*finance.ScheduleSettleItem, len(list))
 	for i, item := range list {
 		items[i] = &finance.ScheduleSettleItem{
@@ -207,7 +206,7 @@ func (s *FinanceServiceImpl) GetScheduleSettle(ctx context.Context, req *finance
 
 func (s *FinanceServiceImpl) GetStationSettle(ctx context.Context, req *finance.StationSettleReq) (resp *finance.StationSettleResp, err error) {
 	resp = &finance.StationSettleResp{}
-
+	// 分页参数容错处理
 	page, size := int(req.Page), int(req.Size)
 	if page <= 0 {
 		page = 1
@@ -215,14 +214,14 @@ func (s *FinanceServiceImpl) GetStationSettle(ctx context.Context, req *finance.
 	if size <= 0 {
 		size = 10
 	}
-
+	//执行线路维度的分页筛选查询
 	list, total, err := dao.GetStationSettleList(req.StartDate, req.EndDate, req.StationId, page, size)
 	if err != nil {
 		resp.Success = false
 		resp.Msg = "查询失败: " + err.Error()
 		return resp, nil
 	}
-
+	//数据格式转换：Model 层 → API 层
 	items := make([]*finance.StationSettleItem, len(list))
 	for i, item := range list {
 		items[i] = &finance.StationSettleItem{
@@ -253,7 +252,7 @@ func (s *FinanceServiceImpl) GetStationSettle(ctx context.Context, req *finance.
 
 func (s *FinanceServiceImpl) GetDriverSettle(ctx context.Context, req *finance.DriverSettleReq) (resp *finance.DriverSettleResp, err error) {
 	resp = &finance.DriverSettleResp{}
-
+	// 分页参数容错处理
 	page, size := int(req.Page), int(req.Size)
 	if page <= 0 {
 		page = 1
@@ -261,14 +260,14 @@ func (s *FinanceServiceImpl) GetDriverSettle(ctx context.Context, req *finance.D
 	if size <= 0 {
 		size = 10
 	}
-
+	//执行线路维度的分页筛选查询
 	list, total, err := dao.GetDriverSettleList(req.StartDate, req.EndDate, req.DriverId, req.DriverName, page, size)
 	if err != nil {
 		resp.Success = false
 		resp.Msg = "查询失败: " + err.Error()
 		return resp, nil
 	}
-
+	//数据格式转换：Model 层 → API 层
 	items := make([]*finance.DriverSettleItem, len(list))
 	for i, item := range list {
 		items[i] = &finance.DriverSettleItem{
@@ -296,7 +295,7 @@ func (s *FinanceServiceImpl) GetDriverSettle(ctx context.Context, req *finance.D
 
 func (s *FinanceServiceImpl) GetTransactions(ctx context.Context, req *finance.TransactionReq) (resp *finance.TransactionResp, err error) {
 	resp = &finance.TransactionResp{}
-
+	// 分页参数容错处理
 	page, size := int(req.Page), int(req.Size)
 	if page <= 0 {
 		page = 1
@@ -304,14 +303,14 @@ func (s *FinanceServiceImpl) GetTransactions(ctx context.Context, req *finance.T
 	if size <= 0 {
 		size = 10
 	}
-
+	//执行线路维度的分页筛选查询
 	list, total, err := dao.GetTransactionList(req.StartDate, req.EndDate, req.OrderNo, int(req.PaymentMethod), int(req.TransType), page, size)
 	if err != nil {
 		resp.Success = false
 		resp.Msg = "查询失败: " + err.Error()
 		return resp, nil
 	}
-
+	//数据格式转换：Model 层 → API 层
 	items := make([]*finance.TransactionItem, len(list))
 	for i, item := range list {
 		items[i] = &finance.TransactionItem{
@@ -419,10 +418,10 @@ func (s *FinanceServiceImpl) HandleAbnormal(ctx context.Context, req *finance.Ha
 }
 
 // ========== 生成账单 ==========
-
+// 财务模块的账单生成核心接口
 func (s *FinanceServiceImpl) GenerateBill(ctx context.Context, req *finance.GenerateBillReq) (resp *finance.GenerateBillResp, err error) {
 	resp = &finance.GenerateBillResp{}
-
+	//按账单类型分支处理（
 	var bill *model.Bill
 
 	switch req.BillType {
@@ -441,13 +440,13 @@ func (s *FinanceServiceImpl) GenerateBill(ctx context.Context, req *finance.Gene
 		resp.Msg = "无效的账单类型"
 		return resp, nil
 	}
-
+	// 账单生成错误处理
 	if err != nil {
 		resp.Success = false
 		resp.Msg = "生成账单失败: " + err.Error()
 		return resp, nil
 	}
-
+	// 赋值成功响应，返回账单 ID
 	resp.Success = true
 	resp.Msg = "生成成功"
 	resp.BillId = int64(bill.ID)
