@@ -11,6 +11,7 @@ import (
 
 	"group/kitex_gen/car/passenger"
 	"group/kitex_gen/car/passenger/passengerservice"
+	"group/middleware"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
@@ -38,6 +39,9 @@ func main() {
 	// 创建Hertz HTTP服务器
 	// 监听localhost:8891端口
 	hz := server.New(server.WithHostPorts("127.0.0.1:8891"))
+
+	// 使用 CORS 中间件
+	hz.Use(middleware.CORS())
 
 	// ==================== 注册HTTP路由 ====================
 	hz.GET("/api/passenger/detail", GetPassengerDetail)   // 查询乘客详情 - 根据乘客ID获取乘客基本信息

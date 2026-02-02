@@ -86,36 +86,6 @@ func (s *OrderManageServiceImpl) OrderCreate(ctx context.Context, req *order_man
 	}, nil
 }
 
-// OrderPaymentStatus 订单支付状态查询接口
-func (s *OrderManageServiceImpl) OrderPaymentStatus(ctx context.Context, req *order_manage.OrderPaymentStatusReq) (*order_manage.OrderPaymentStatusResp, error) {
-	log.Printf("查询订单支付状态: 订单ID=%d, 用户ID=%d", req.OrderId, req.UserId)
-
-	// 1. 查询订单（调用DAO层，带权限验证）
-	var orderData model.OrderManage
-	order, err := dao.GetOrderManageByIDAndUserID(&orderData, req.OrderId, req.UserId)
-	if err != nil {
-		return &order_manage.OrderPaymentStatusResp{
-			Success: false,
-			Message: "订单不存在或无权限查看",
-		}, nil
-	}
-
-	// 2. 返回支付状态
-	paymentTime := ""
-	if order.PaymentTime != nil {
-		paymentTime = order.PaymentTime.Format("2006-01-02 15:04:05")
-	}
-
-	return &order_manage.OrderPaymentStatusResp{
-		PaymentStatus: order.PaymentStatus,
-		PaymentMethod: order.PaymentMethod,
-		PaymentAmount: order.Price,
-		PaymentTime:   paymentTime,
-		Success:       true,
-		Message:       "查询成功",
-	}, nil
-}
-
 // OrderQuery 订单查询接口
 func (s *OrderManageServiceImpl) OrderQuery(ctx context.Context, req *order_manage.OrderQueryReq) (*order_manage.OrderQueryResp, error) {
 	log.Printf("订单查询请求: 类型=%v, 状态=%v", req.OrderType, req.Status)

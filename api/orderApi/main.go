@@ -8,6 +8,7 @@ import (
 
 	"group/kitex_gen/car/order"
 	"group/kitex_gen/car/order/orderservice"
+	"group/middleware"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
@@ -29,6 +30,9 @@ func main() {
 
 	// 创建 HTTP 服务器
 	hz := server.New(server.WithHostPorts("127.0.0.1:8993"))
+
+	// 使用 CORS 中间件
+	hz.Use(middleware.CORS())
 
 	// ==================== 注册路由 ====================
 	// 行程管理路由

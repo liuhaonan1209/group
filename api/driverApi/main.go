@@ -8,6 +8,7 @@ import (
 
 	"group/kitex_gen/car/driver"
 	"group/kitex_gen/car/driver/driverservice"
+	"group/middleware"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
@@ -28,7 +29,10 @@ func main() {
 	cli = c
 
 	// 创建 HTTP 服务器
-	hz := server.New(server.WithHostPorts("127.0.0.1:6667"))
+	hz := server.New(server.WithHostPorts("127.0.0.1:8997"))
+
+	// 使用 CORS 中间件
+	hz.Use(middleware.CORS())
 
 	// 基础功能路由
 	hz.GET("/api/driver/:id", GetDriverDetail)      // 查询司机详情 - 根据司机ID获取司机基本信息
@@ -40,7 +44,7 @@ func main() {
 	hz.POST("/api/driver/config/update", UpdateDriverConfig)          // 更新司机配置 - 修改司机的配置信息
 	hz.POST("/api/driver/vehicle/compliance", CheckVehicleCompliance) // 车辆合规性验证 - 验证车牌号和保险是否合规
 
-	log.Println("Driver API 服务启动在 localhost:6667")
+	log.Println("Driver API 服务启动在 localhost:8997")
 
 	if err := hz.Run(); err != nil {
 		log.Fatal(err)

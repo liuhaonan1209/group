@@ -7,6 +7,8 @@ import (
 	"log"
 	"strconv"
 
+	"group/middleware"
+
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
@@ -15,6 +17,9 @@ import (
 func main() {
 	// 创建Hertz HTTP服务器
 	hz := server.New(server.WithHostPorts("127.0.0.1:9995"))
+
+	// 使用 CORS 中间件
+	hz.Use(middleware.CORS())
 
 	// 注册HTTP路由
 	hz.POST("/api/rating/submit", RatingSubmit)               // 评价提交

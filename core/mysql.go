@@ -54,9 +54,13 @@ func Mysql() {
 		&model.Trip{},               // 行程表
 		&model.TripShare{},          // 行程分享记录表
 		&model.PassengerHelp{},      // 乘客求助记录表
-		&model.OrderManage{},        //订单表
-		&model.OrderStatusHistory{}, //订单状态历史表
-		&model.RefundManage{},       //退票管理表
+		&model.OrderManage{},        // 订单表
+		&model.OrderStatusHistory{}, // 订单状态历史表
+		&model.RefundManage{},       // 退票管理表
+		&model.AuditLog{},           // 审计日志表
+		&model.ExportLog{},          // 导出日志表
+		&model.SystemLog{},          // 系统日志表
+		&model.AccessLog{},          // 访问日志表
 	)
 	if err != nil {
 		panic("数据库迁移失败")

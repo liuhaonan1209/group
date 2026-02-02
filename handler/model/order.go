@@ -9,15 +9,17 @@ import (
 // Trip 行程表模型
 type Trip struct {
 	gorm.Model
-	PublisherID   uint      `gorm:"not null;comment:发布者ID" json:"publisher_id"`
-	PublisherType string    `gorm:"type:varchar(20);not null;comment:发布者类型(passenger/driver)" json:"publisher_type"`
-	StartPoint    string    `gorm:"type:varchar(200);not null;comment:起点" json:"start_point"`
-	EndPoint      string    `gorm:"type:varchar(200);not null;comment:终点" json:"end_point"`
-	DepartureTime time.Time `gorm:"type:datetime;not null;comment:出行时间" json:"departure_time"`
-	VehicleInfo   string    `gorm:"type:varchar(200);comment:车辆信息" json:"vehicle_info"`
-	SpecialNeeds  string    `gorm:"type:text;comment:特殊需求" json:"special_needs"`
-	ContactWay    string    `gorm:"type:varchar(100);comment:联系方式" json:"contact_way"`
-	Status        string    `gorm:"type:varchar(20);default:'pending';comment:行程状态(pending/confirmed/completed/cancelled)" json:"status"`
+	PublisherID         uint      `gorm:"not null;comment:发布者ID" json:"publisher_id"`
+	PublisherType       string    `gorm:"type:varchar(20);not null;comment:发布者类型(passenger/driver)" json:"publisher_type"`
+	StartPoint          string    `gorm:"type:varchar(200);not null;comment:起点" json:"start_point"`
+	EndPoint            string    `gorm:"type:varchar(200);not null;comment:终点" json:"end_point"`
+	DepartureTime       time.Time `gorm:"type:datetime;not null;comment:出行时间" json:"departure_time"`
+	TripTimeType        string    `gorm:"type:varchar(20);default:'scheduled';comment:出行时间类型(immediate:即时,scheduled:预约)" json:"trip_time_type"`
+	VehicleInfo         string    `gorm:"type:varchar(200);comment:车辆信息" json:"vehicle_info"`
+	SpecialNeeds        string    `gorm:"type:text;comment:特殊需求(文本)" json:"special_needs"`
+	SpecialNeedsDetail  string    `gorm:"type:json;comment:特殊需求详情(JSON)" json:"special_needs_detail"`
+	ContactWay          string    `gorm:"type:varchar(100);comment:联系方式" json:"contact_way"`
+	Status              string    `gorm:"type:varchar(20);default:'pending';comment:行程状态(pending/confirmed/completed/cancelled)" json:"status"`
 }
 
 func (Trip) TableName() string {

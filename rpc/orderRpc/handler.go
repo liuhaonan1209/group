@@ -29,16 +29,33 @@ func (s *OrderServiceImpl) TripPublish(ctx context.Context, req *order.TripPubli
 		}, nil
 	}
 
+	// 判断出行时间类型（即时或预约）
+	tripTimeType := "scheduled" // 默认预约
+	if time.Now().Add(30 * time.Minute).After(departureTime) {
+		// 如果出行时间在30分钟内，视为即时出行
+		tripTimeType = "immediate"
+	}
+
+	// 处理特殊需求详情（如果有）
+	specialNeedsDetail := ""
+	if req.SpecialNeeds != nil && *req.SpecialNeeds != "" {
+		// 这里可以解析特殊需求并转换为JSON格式
+		// 暂时保持原样，后续可以通过API传入结构化数据
+		specialNeedsDetail = ""
+	}
+
 	// 创建行程记录
 	trip := model.Trip{
-		PublisherID:   uint(req.PassengerId),
-		PublisherType: "passenger",
-		StartPoint:    req.StartPoint,
-		EndPoint:      req.EndPoint,
-		DepartureTime: departureTime,
-		SpecialNeeds:  getStringValue(req.SpecialNeeds),
-		ContactWay:    getStringValue(req.ContactWay),
-		Status:        "pending",
+		PublisherID:        uint(req.PassengerId),
+		PublisherType:      "passenger",
+		StartPoint:         req.StartPoint,
+		EndPoint:           req.EndPoint,
+		DepartureTime:      departureTime,
+		TripTimeType:       tripTimeType,
+		SpecialNeeds:       getStringValue(req.SpecialNeeds),
+		SpecialNeedsDetail: specialNeedsDetail,
+		ContactWay:         getStringValue(req.ContactWay),
+		Status:             "pending",
 	}
 
 	err = dao.CreateTrip(&trip)
@@ -72,6 +89,13 @@ func (s *OrderServiceImpl) DriverTripPublish(ctx context.Context, req *order.Dri
 		}, nil
 	}
 
+	// 判断出行时间类型（即时或预约）
+	tripTimeType := "scheduled" // 默认预约
+	if time.Now().Add(30 * time.Minute).After(departureTime) {
+		// 如果出行时间在30分钟内，视为即时出行
+		tripTimeType = "immediate"
+	}
+
 	// 创建行程记录
 	trip := model.Trip{
 		PublisherID:   uint(req.DriverId),
@@ -79,6 +103,7 @@ func (s *OrderServiceImpl) DriverTripPublish(ctx context.Context, req *order.Dri
 		StartPoint:    req.StartPoint,
 		EndPoint:      req.EndPoint,
 		DepartureTime: departureTime,
+		TripTimeType:  tripTimeType,
 		VehicleInfo:   req.VehicleInfo,
 		Status:        "pending",
 	}
@@ -367,7 +392,10 @@ func (s *OrderServiceImpl) DataExport(ctx context.Context, req *order.DataExport
 	downloadUrl := fmt.Sprintf("https://carpool.example.com/download/export_%d.csv", exportRecord.ID)
 
 	// 更新导出记录状态
-	dao.UpdateExportRecordStatus(&exportRecord, int64(exportRecord.ID), "completed", downloadUrl)
+	err = dao.UpdateExportRecordStatus(&exportRecord, int64(exportRecord.ID), "completed", downloadUrl)
+	if err != nil {
+		return nil, err
+	}
 
 	log.Printf("数据导出任务创建成功: 导出ID=%d", exportRecord.ID)
 	return &order.DataExportResp{

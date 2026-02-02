@@ -9,6 +9,8 @@ import (
 	"strconv"
 	"time"
 
+	"group/middleware"
+
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
 	"github.com/cloudwego/hertz/pkg/common/utils"
@@ -21,6 +23,9 @@ func main() {
 	// 创建Hertz HTTP服务器
 	// 监听localhost:9994端口
 	hz := server.New(server.WithHostPorts("127.0.0.1:7777"))
+
+	// 使用 CORS 中间件
+	hz.Use(middleware.CORS())
 
 	// 注册HTTP路由
 	hz.POST("/api/payment/pay", Payment)                  // 支付接口

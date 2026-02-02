@@ -11,6 +11,7 @@ import (
 
 	"group/kitex_gen/car/order_manage"
 	"group/kitex_gen/car/order_manage/ordermanageservice"
+	"group/middleware"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
@@ -36,9 +37,11 @@ func main() {
 	// 监听localhost:9992端口
 	hz := server.New(server.WithHostPorts("127.0.0.1:9992"))
 
+	// 使用 CORS 中间件
+	hz.Use(middleware.CORS())
+
 	// 注册HTTP路由
 	hz.POST("/api/order/create", CreateOrder)              // 创建订单
-	hz.GET("/api/order/payment-status", GetPaymentStatus)  // 查询支付状态
 	hz.POST("/api/order/query", QueryOrders)               // 查询订单列表
 	hz.GET("/api/order/detail/:id", GetOrderDetail)        // 查询订单详情
 	hz.POST("/api/order/update-status", UpdateOrderStatus) // 更新订单状态
@@ -147,86 +150,6 @@ func CreateOrder(ctx context.Context, c *app.RequestContext) {
 		"data": map[string]interface{}{
 			"order_id": resp.OrderId,
 			"order_no": resp.OrderNo,
-		},
-	})
-}
-
-// GetPaymentStatus 查询支付状态接口
-// HTTP GET /api/order/payment-status?order_id=xxx&user_id=xxx
-// 查询订单支付状态
-// 参数:
-//   - order_id: 订单ID
-//   - user_id: 用户ID
-//
-// 返回:
-//   - 200: 查询成功
-//   - 400: 参数错误或查询失败
-//   - 500: 服务器错误
-func GetPaymentStatus(ctx context.Context, c *app.RequestContext) {
-	// 获取查询参数
-	orderIDStr := c.Query("order_id")
-	userIDStr := c.Query("user_id")
-
-	// 参数验证
-	if orderIDStr == "" || userIDStr == "" {
-		c.JSON(400, map[string]interface{}{
-			"code":    400,
-			"message": "订单ID和用户ID为必填项",
-		})
-		return
-	}
-
-	// 转换参数类型
-	var orderID, userID int64
-	if _, err := fmt.Sscanf(orderIDStr, "%d", &orderID); err != nil {
-		c.JSON(400, map[string]interface{}{
-			"code":    400,
-			"message": "无效的订单ID",
-		})
-		return
-	}
-	if _, err := fmt.Sscanf(userIDStr, "%d", &userID); err != nil {
-		c.JSON(400, map[string]interface{}{
-			"code":    400,
-			"message": "无效的用户ID",
-		})
-		return
-	}
-
-	// 构造RPC请求
-	req := order_manage.NewOrderPaymentStatusReq()
-	req.OrderId = orderID
-	req.UserId = userID
-
-	// 调用RPC服务查询支付状态
-	resp, err := cli.OrderPaymentStatus(context.Background(), req, callopt.WithRPCTimeout(3*time.Second))
-	if err != nil {
-		c.JSON(500, map[string]interface{}{
-			"code":    500,
-			"message": "查询支付状态失败",
-			"error":   err.Error(),
-		})
-		return
-	}
-
-	// 检查查询结果
-	if !resp.Success {
-		c.JSON(400, map[string]interface{}{
-			"code":    400,
-			"message": resp.Message,
-		})
-		return
-	}
-
-	// 返回成功响应
-	c.JSON(200, map[string]interface{}{
-		"code":    200,
-		"message": resp.Message,
-		"data": map[string]interface{}{
-			"payment_status": resp.PaymentStatus,
-			"payment_method": resp.PaymentMethod,
-			"payment_amount": resp.PaymentAmount,
-			"payment_time":   resp.PaymentTime,
 		},
 	})
 }
